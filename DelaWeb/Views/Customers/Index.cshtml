@@ -1,0 +1,46 @@
+﻿@model DelaWeb.ViewModels.CustomersViewModel
+
+<style>
+    #customer-view .table-dark:hover{
+        color: #808080;
+    }
+</style>
+<div id="customer-view">
+    <p class="mt-2">
+        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-outline-success" })
+    </p>
+    <table class="table table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>SponsorID</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.CustomersList)
+        {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SponsorID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @*<a href="@Url.Action("Edit","Customers", new { id = item.ID })" ><i class="bi bi-pencil-fill"></i> </a>*@
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

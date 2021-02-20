@@ -1,0 +1,112 @@
+﻿@model DelaWeb.ViewModels.CustomerDetailsViewModel
+<div id="customerdetails-view">
+    <div>
+        <h4>Customer</h4>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Customer.ID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.ID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.ID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.Address1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.Address1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.Phone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.SponsorID)
+            </dt>
+
+            <dd>
+                @Html.ActionLink(Model.Customer.SponsorID.ToString(), "Details", "Customers", new { id = Model.Customer.SponsorID}, new { @class = "btn btn-link" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.CustomerType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.CustomerType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.StartTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.StartTime)
+            </dd>
+
+        </dl>
+    </div>
+    <div>
+        <h3>Invoices</h3>
+        <p>
+            @Html.ActionLink("Create New", "Create", "Invoices", new { customerID = Model.Customer.ID },null)
+        </p>
+        <table class="table table-hover">
+            <tr class="">
+                <th>
+                    @Html.DisplayNameFor(model => model.Invoices.FirstOrDefault().Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Invoices.FirstOrDefault().Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Invoices.FirstOrDefault().Percentage)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Invoices)
+            {
+                <tr class="table-dark">
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Folio)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Percentage)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Invoices", new { id = item.InvoiceID }, null) |
+                        @Html.ActionLink("Details", "Details", "Invoices", new { id = item.InvoiceID }, null) |
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
