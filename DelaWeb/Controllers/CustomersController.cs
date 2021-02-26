@@ -17,7 +17,23 @@ namespace DelaWeb.Controllers
             model.CustomersList = Customers.GetAllCustomers();
             return View(model);
         }
+        public ActionResult CreateAll()
+        {
+            using(var db = new ApplicationDbContext())
+            {
 
+                var model = new CustomersViewModel();
+                model.CustomersList = Customers.GetAllCustomers();
+                AccountController ac = new AccountController();
+                var Response = false;
+                foreach (var item in model.CustomersList)
+                {
+                     Response = ac.RegisterOne(new RegisterViewModel { Email = item.ID + "@dela.com", Password = "Dela1234." }).GetAwaiter().GetResult();
+                }
+            }
+
+            return View("Index","Home");
+        }
         // GET: Customers/Details/5
         [Route("details/{id}")]
         public ActionResult Details(int id)
@@ -25,6 +41,7 @@ namespace DelaWeb.Controllers
             var model = new CustomerDetailsViewModel();
             model.Customer = Customers.GetCustomerByID(id);
             model.Invoices = InvoicesService.GetInvoicesByCustomerID(id);
+            model.Orders = OrdersService.GetOrdersByCustomerID(id);
 
             return View(model);
         }
