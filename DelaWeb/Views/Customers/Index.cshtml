@@ -9,6 +9,7 @@
     <p class="mt-2">
         @Html.ActionLink("+", "Create", null, new { @class = "btn btn-outline-success" })
     </p>
+    @*<a href="@Url.Action("CreateAll")">Create all</a>*@
     <table class="table table-hover">
         <tr>
             <th>Nombre</th>
@@ -34,10 +35,15 @@
                     @Html.DisplayFor(modelItem => item.SponsorID)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @*<a href="@Url.Action("Edit","Customers", new { id = item.ID })" ><i class="bi bi-pencil-fill"></i> </a>*@
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @if(item.ID != 0) //Validating if it's master account 
+                    {
+                        <text>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @*<a href="@Url.Action("Edit","Customers", new { id = item.ID })" ><i class="bi bi-pencil-fill"></i> </a>*@
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        </text>
+                    }
                 </td>
             </tr>
         }
