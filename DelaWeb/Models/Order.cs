@@ -23,12 +23,13 @@ namespace DelaWeb.Models
         public string Other3 { get; set; }
         public string Other4 { get; set; }
         public string Other5 { get; set; }
-        public OrderDetails Details { get; set; }
+        public List<OrderDetails> Details { get; set; }
     }
     public class OrderDetails
     {
         public int ID { get; set; }
         public int OrderID { get; set; }
-        public List<Product> Products { get; set; }
+        public int  ProductID { get; set; }
+        public int Quantity { get; set; }
     }
 }

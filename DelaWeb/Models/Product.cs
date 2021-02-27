@@ -28,4 +28,11 @@ namespace DelaWeb.Models
         public string Other4 { get; set; }
         public string Other5 { get; set; }
     }
+
+    public class ItemCart {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+    }
+
 }

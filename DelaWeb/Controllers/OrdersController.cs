@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DelaWeb.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
@@ -60,6 +63,40 @@ namespace DelaWeb.Controllers
             return View(order);
         }
 
+        [HttpPost]
+        public ActionResult CreateOrder(int customerID, int type, string items)
+        {
+            try
+            {
+
+                var itemsObject = JArray.Parse(items);
+                var listitems = itemsObject.ToObject<List<ItemCart>>();
+                var order = new Order();
+                order.CustomerID = customerID;
+                order.Date = DateTime.Now;
+                order.Type = type;
+                var details = new List<OrderDetails>();
+                foreach (var item in listitems)
+                {
+                    details.Add(new OrderDetails { ProductID = Int32.Parse(item.Code), OrderID = order.OrderID, Quantity = item.Quantity });
+                }
+
+                order.Details = details;
+                db.Orders.Add(order);
+                db.SaveChanges();
+
+                return new JsonNetResult(new { 
+                    success = true
+                });
+            }
+            catch(Exception ex)
+            {
+                return new JsonNetResult(new
+                {
+                    success = false
+                });
+            }
+        }
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
         {

@@ -7,13 +7,13 @@ namespace DelaWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdatingOrderTable : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatingOrderTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102251316030_UpdatingOrderTable"; }
+            get { return "202102271713403_Initial"; }
         }
         
         string IMigrationMetadata.Source
