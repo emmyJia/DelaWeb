@@ -18,6 +18,7 @@ namespace DelaWeb.Models
         public DateTime Date { get; set; }
         public int CustomerID { get; set; }
         public int Type { get; set; }
+        public string Address { get; set; }
         public string Other1 { get; set; }
         public string Other2 { get; set; }
         public string Other3 { get; set; }
@@ -30,6 +31,8 @@ namespace DelaWeb.Models
         public int ID { get; set; }
         public int OrderID { get; set; }
         public int  ProductID { get; set; }
+        public decimal Price { get; set; }
+        public decimal Bonus { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DelaWeb.Models;
+using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
@@ -75,6 +76,7 @@ namespace DelaWeb.Controllers
 
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -89,6 +91,12 @@ namespace DelaWeb.Controllers
                     ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
                     return View(model);
             }
+            //var customer = Customers.GetCustomerByID(2);
+            //var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Id = customer.ID };
+
+            //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+            return RedirectToAction(returnUrl);
         }
 
         //
@@ -173,28 +181,18 @@ namespace DelaWeb.Controllers
         }
 
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<bool> RegisterOne(RegisterViewModel model)
+        public async Task<ActionResult> RegisterOne(int ID)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var model = Customers.GetCustomerByID(ID);
+            var user = new ApplicationUser { UserName = model.ID + "@dela.com", Email = model.ID + "@dela.com", CustomerID = model.ID };
+            var result = await UserManager.CreateAsync(user, "Del@1234.");
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar correo electrónico con este vínculo
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
-
-                    return true;
-                }
-                AddErrors(result);
+                return RedirectToAction("Index", "Customers");
             }
-            return false;
+            return RedirectToAction("Index", "Home");
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             //return View(model);

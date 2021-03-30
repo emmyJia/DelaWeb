@@ -1,0 +1,95 @@
+﻿@model DelaWeb.ViewModels.CustomersGraphicViewModel
+@{
+    ViewBag.Title = "CustomersGraphic";
+}
+
+<h2 class="my-5">Estructura Organizacional</h2>
+
+<div id="chart_div"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+
+        google.charts.load('current', { packages: ["orgchart"] });
+        //google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(googleReady);
+        function googleReady() {
+            init()
+        }
+
+        var getGraphicStructurUrl = '@Url.Action("GetCustomersGraphic","Customers")';
+            var model = [];
+            var structure = [];
+
+        function init() {
+            
+            $.ajax({
+                type: "POST",
+                url: getGraphicStructurUrl,
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                data: { customerID: 0 },//, JSON.stringify(data),
+                success: function (resp) {
+                    if (resp.success == true) {
+                        debugger;
+                        var d = jQuery.parseJSON(resp.structure);
+                        let parentArray = [];
+                        parentArray.push(d.CustomerID + '-' + d.Name);
+                        parentArray.push('');
+                        structure.push(parentArray);
+                        generateStructure(d.Childs);
+                        drawChart(structure);
+                    }
+                    else {
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('Error!!');
+                }
+            });
+        }
+
+        function generateStructure(struc) {
+            for (var i = 0; i < struc.length; i++) {
+                let e = struc[i];
+                let newArray = [e.CustomerID + '-' + e.Name, e.SponsorID + '-' +e.SponsorName]
+                structure.push(newArray);
+                if (struc.Childs !== undefined) {
+                    generateStructure(struc.Childs);
+                }
+            }
+        }
+
+        function drawChart(structure) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+
+            debugger;
+            //for (var i = 0; i < structure.length; i++) {
+            //    data.addRow(structure[i]);
+            //}
+            data.addRows(
+                //[{'v':'Mike', 'f':'Mike<div style="color:red; font-style:italic">President</div>'},
+                // '', 'The President'],
+                //[{'v':'Jim', 'f':'Jim<div style="color:red; font-style:italic">Vice President</div>'},
+                // 'Mike', 'VP'],
+                //['Alice', 'Mike', ''],
+                //['Bob', 'Jim', 'Bob Sponge'],
+                //['Carol', 'Bob', '']
+
+                //['Alice', '', ''],
+                //['Bob', 'Alice', 'Bob Sponge'],
+                //['Carol', 'Bob', '']
+                structure
+            );
+            // Create the chart.
+            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            chart.draw(data, { 'allowHtml': true });
+            
+        }
+    </script>
+
+}

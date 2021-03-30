@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DelaWeb.Models;
+using DelaWeb.ViewModels;
 
 namespace DelaWeb.Service
 {
@@ -63,6 +64,7 @@ namespace DelaWeb.Service
                     existingCustomer.Address1 = customer.Address1;
                     existingCustomer.Name = customer.Name;
                     existingCustomer.Phone = customer.Phone;
+                    existingCustomer.SponsorID = customer.SponsorID;
 
                     context.SaveChanges();
                     return true;
@@ -96,6 +98,31 @@ namespace DelaWeb.Service
                 return false;
             }
 
+        }
+
+        public static List<Customer> GetCustomersBySponsorID(int sponsorID)
+        {
+            var list = new List<Customer>();
+            using (var context = new ApplicationDbContext())
+            {
+                list = (from c in context.Customers
+                        where c.SponsorID==sponsorID && c.ID != sponsorID
+                        select c).ToList();
+            }
+
+            return list;
+        }
+
+        public static CustomerStructure GetCustomerStructure(int currentID)
+        {
+            var org = new CustomerStructure();
+            var current = GetCustomerByID(currentID);
+            var spons = GetCustomerByID(current.SponsorID);
+            org.SponsorID = current.SponsorID;
+            org.Name = current.Name;
+            org.CustomerID = currentID;
+            org.SponsorName = spons.Name;
+            return org;
         }
     }
 }

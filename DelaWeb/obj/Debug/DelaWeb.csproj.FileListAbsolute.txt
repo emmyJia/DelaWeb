@@ -251,13 +251,11 @@ D:\source\repos\DelaWeb\DelaWeb\bin\es\Microsoft.Owin.Security.Google.resources.
 D:\source\repos\DelaWeb\DelaWeb\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
 D:\source\repos\DelaWeb\DelaWeb\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.csprojAssemblyReference.cache
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.InitialMigration.resources
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.InitialMigration1.resources
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.csproj.GenerateResource.cache
 D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.csproj.CoreCompileInputs.cache
 D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.csproj.CopyComplete
 D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.dll
 D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.pdb
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.IncludingCustomerIDInUser.resources
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.InitialMigration2.resources
-D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.UpdatingOrderTable.resources
+D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.Initial.resources
+D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.csproj.GenerateResource.cache
+D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.BonusAdding.resources
+D:\source\repos\DelaWeb\DelaWeb\obj\Debug\DelaWeb.Migrations.BonusesAdding.resources

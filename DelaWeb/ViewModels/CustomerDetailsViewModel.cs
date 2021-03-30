@@ -17,5 +17,7 @@ namespace DelaWeb.ViewModels
         public Customer Customer { get; set; }
         public List<Invoice> Invoices { get; set; }
         public List<Order> Orders { get; set; }
+        public List<Customer> Childs { get; set; }
+        public Customer Sponsor { get; set; }
     }
 }

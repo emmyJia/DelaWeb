@@ -178,32 +178,27 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="Migrations\202102190552143_InitialMigration.cs" />
-    <Compile Include="Migrations\202102190552143_InitialMigration.Designer.cs">
-      <DependentUpon>202102190552143_InitialMigration.cs</DependentUpon>
+    <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Migrations\202102271713403_Initial.cs" />
+    <Compile Include="Migrations\202102271713403_Initial.Designer.cs">
+      <DependentUpon>202102271713403_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102190555445_InitialMigration1.cs" />
-    <Compile Include="Migrations\202102190555445_InitialMigration1.Designer.cs">
-      <DependentUpon>202102190555445_InitialMigration1.cs</DependentUpon>
+    <Compile Include="Migrations\202103111306450_BonusAdding.cs" />
+    <Compile Include="Migrations\202103111306450_BonusAdding.Designer.cs">
+      <DependentUpon>202103111306450_BonusAdding.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102211837104_IncludingCustomerIDInUser.cs" />
-    <Compile Include="Migrations\202102211837104_IncludingCustomerIDInUser.Designer.cs">
-      <DependentUpon>202102211837104_IncludingCustomerIDInUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102251203486_InitialMigration2.cs" />
-    <Compile Include="Migrations\202102251203486_InitialMigration2.Designer.cs">
-      <DependentUpon>202102251203486_InitialMigration2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102251316030_UpdatingOrderTable.cs" />
-    <Compile Include="Migrations\202102251316030_UpdatingOrderTable.Designer.cs">
-      <DependentUpon>202102251316030_UpdatingOrderTable.cs</DependentUpon>
+    <Compile Include="Migrations\202103111307470_BonusesAdding.cs" />
+    <Compile Include="Migrations\202103111307470_BonusesAdding.Designer.cs">
+      <DependentUpon>202103111307470_BonusesAdding.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Bonus.cs" />
     <Compile Include="Services\ProductsService.cs" />
     <Compile Include="Services\OrdersService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="ViewModels\CustomerDetailsViewModel.cs" />
+    <Compile Include="ViewModels\CustomersGraphicViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Order.cs" />
@@ -291,6 +286,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Customers\CustomersGraphic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,20 +305,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102190552143_InitialMigration.resx">
-      <DependentUpon>202102190552143_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102271713403_Initial.resx">
+      <DependentUpon>202102271713403_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102190555445_InitialMigration1.resx">
-      <DependentUpon>202102190555445_InitialMigration1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103111306450_BonusAdding.resx">
+      <DependentUpon>202103111306450_BonusAdding.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102211837104_IncludingCustomerIDInUser.resx">
-      <DependentUpon>202102211837104_IncludingCustomerIDInUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102251203486_InitialMigration2.resx">
-      <DependentUpon>202102251203486_InitialMigration2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102251316030_UpdatingOrderTable.resx">
-      <DependentUpon>202102251316030_UpdatingOrderTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103111307470_BonusesAdding.resx">
+      <DependentUpon>202103111307470_BonusesAdding.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

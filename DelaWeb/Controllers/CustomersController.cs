@@ -1,8 +1,10 @@
 ﻿using DelaWeb.Models;
 using DelaWeb.Service;
 using DelaWeb.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace DelaWeb.Controllers
@@ -17,23 +19,23 @@ namespace DelaWeb.Controllers
             model.CustomersList = Customers.GetAllCustomers();
             return View(model);
         }
-        public ActionResult CreateAll()
-        {
-            using(var db = new ApplicationDbContext())
-            {
+        //public async Task<ActionResult> CreateAll()
+        //{
+        //    using(var db = new ApplicationDbContext())
+        //    {
 
-                var model = new CustomersViewModel();
-                model.CustomersList = Customers.GetAllCustomers();
-                AccountController ac = new AccountController();
-                var Response = false;
-                foreach (var item in model.CustomersList)
-                {
-                     Response = ac.RegisterOne(new RegisterViewModel { Email = item.ID + "@dela.com", Password = "Dela1234." }).GetAwaiter().GetResult();
-                }
-            }
+        //        var model = new CustomersViewModel();
+        //        model.CustomersList = Customers.GetAllCustomers();
+        //        AccountController ac = new AccountController();
+        //        var Response = false;
+        //        foreach (var item in model.CustomersList)
+        //        {
+        //             Response = ac.RegisterOne(new RegisterViewModel { CustomerID = item.ID, Email = item.ID + "@dela.com", Password = "Dela1234." }).GetAwaiter().GetResult();
+        //        }
+        //    }
 
-            return View("Index","Home");
-        }
+        //    return View("Index","Home");
+        //}
         // GET: Customers/Details/5
         [Route("details/{id}")]
         public ActionResult Details(int id)
@@ -42,6 +44,8 @@ namespace DelaWeb.Controllers
             model.Customer = Customers.GetCustomerByID(id);
             model.Invoices = InvoicesService.GetInvoicesByCustomerID(id);
             model.Orders = OrdersService.GetOrdersByCustomerID(id);
+            model.Childs = Customers.GetCustomersBySponsorID(id);
+            model.Sponsor = Customers.GetCustomerByID(model.Customer.SponsorID);
 
             return View(model);
         }
@@ -89,16 +93,21 @@ namespace DelaWeb.Controllers
             var model = new Customer();
             model = Customers.GetCustomerByID(id);
             return View(model);
-            return View();
         }
 
         // POST: Customers/Edit/5
+            //public ActionResult Edit([Bind(Include = "ItemID,ItemCode,Name,Description,Price,DiscountPrice,Bonus,Type,Other1,Other2,Other3,Other4,Other5")] Product product)
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "ID,Name,Address1,Phone,SponsorID")] Customer customer)
         {
             try
             {
                 // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    Customers.EditCustomer(customer);
+                    return RedirectToAction("Index");
+                }
 
                 return RedirectToAction("Index");
             }
@@ -128,6 +137,25 @@ namespace DelaWeb.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult CustomersGraphic(int customerID = 0)
+        {
+            return View();
+        }
+        public ActionResult GetCustomersGraphic(int customerID = 0)
+        {
+            var model = new CustomersGraphicViewModel();
+            var parent = Customers.GetCustomerByID(customerID);
+            model.Parent = Customers.GetCustomerStructure(customerID);
+
+            string output = JsonConvert.SerializeObject(model.Parent);
+
+            return new JsonNetResult(new
+            {
+                success = true,
+                structure = output
+            });
         }
     }
 }

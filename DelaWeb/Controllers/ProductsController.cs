@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DelaWeb.Models;
+using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
@@ -113,6 +114,17 @@ namespace DelaWeb.Controllers
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult GetItemInfo(string itemCode)
+        {
+            var product = ProductsService.GetProductByID(Int32.Parse(itemCode));
+            return new JsonNetResult(new
+            {
+                success = true,
+                product
+            });
         }
 
         protected override void Dispose(bool disposing)

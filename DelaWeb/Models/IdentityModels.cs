@@ -25,6 +25,7 @@ namespace DelaWeb.Models
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Bonus> Bonuses { get; set; }
         public ApplicationDbContext()
             : base("DelaConnection", throwIfV1Schema: false)
         {

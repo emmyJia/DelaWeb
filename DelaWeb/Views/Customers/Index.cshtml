@@ -9,9 +9,11 @@
     <p class="mt-2">
         @Html.ActionLink("+", "Create", null, new { @class = "btn btn-outline-success" })
     </p>
+    @Html.ActionLink("Ver Diagrama", "CustomersGraphic","Customers",null,null)
     @*<a href="@Url.Action("CreateAll")">Create all</a>*@
     <table class="table table-hover">
         <tr>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Direccion</th>
             <th>Telefono</th>
@@ -22,6 +24,9 @@
         @foreach (var item in Model.CustomersList)
         {
             <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -42,6 +47,7 @@
                         @*<a href="@Url.Action("Edit","Customers", new { id = item.ID })" ><i class="bi bi-pencil-fill"></i> </a>*@
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("RegisterOne", "RegisterOne","Account", new { id = item.ID },null)
                         </text>
                     }
                 </td>
@@ -50,3 +56,51 @@
 
     </table>
 </div>
+
+<script>
+        var $context = $('.form-horizontal');
+
+
+        var cont = 1;
+        var items = [];
+        let createOrderUrl = '@Url.Action("CreateOrder","Orders")';
+        var $itemlist = $('#item-list tbody');
+
+    //$('#RegisterOne').on('click', function (e) {
+    //    $(this).button('loading');
+    //    var nombre = $('#Product option:selected').text();
+    //    var code = $('#Product').val();
+    //    var cant = $('#Cantidad').val();
+    //    var prod = getProductInfo(code);
+
+    //    var htm = "<tr data-item='" + cont + "'><td>" + cont + "</td><td>" + nombre + "</td><td>" + cant + "</td><td>" + prod.Price + "</td><td>" + prod.DiscountPrice + "</td><td><a class='remove-item' data-item='" + cont + "'>Quitar</a></td></tr>"
+    //    $itemlist.append(htm);
+    //    var json = { Index: cont, Code: code, Name: nombre, Quantity: cant };
+    //    items.push(json);
+
+    //    cont++;
+    //});
+
+
+    function getProductInfo(c) {
+
+        $.ajax({
+            type: "POST",
+            url: getProductUrl,
+            content: "application/json; charset=utf-8",
+            dataType: "json",
+            data: { itemCode: c },
+            success: function (d) {
+                if (d.success == true) {
+                    return d;
+                }
+                else {
+                    return false;
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                    return false;
+            }
+        });
+    }
+</script>
