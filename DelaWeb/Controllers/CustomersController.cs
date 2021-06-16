@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace DelaWeb.Controllers
 {
     [Route("customers")]
+    [Authorize]
     public class CustomersController : Controller
     {
         // GET: Customers
@@ -72,6 +73,8 @@ namespace DelaWeb.Controllers
 
                 if (Customers.CreateCustomer(creationRequest))
                 {
+                    //AccountController ac = new AccountController();
+                    //var Response = ac.RegisterOne(new RegisterViewModel { CustomerID = item.ID, Email = item.ID + "@dela.com", Password = "Dela1234." }).GetAwaiter().GetResult();
                     return RedirectToAction("Index");
                 }
                 else

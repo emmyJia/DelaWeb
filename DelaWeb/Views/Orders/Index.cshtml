@@ -65,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.Other5)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrderID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrderID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OrderID })
+            @*Html.ActionLink("Edit", "Edit", new { id=item.OrderID }) |*@
+            @Html.ActionLink("Details", "Details", "Orders", new { id = item.OrderID }, null) 
+            @*@Html.ActionLink("Delete", "Delete", "Orders", null, new { id=item.OrderID })*@
         </td>
     </tr>
 }

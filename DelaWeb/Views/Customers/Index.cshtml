@@ -1,14 +1,20 @@
 ﻿@model DelaWeb.ViewModels.CustomersViewModel
-
+@{ 
+    var isMaster = User.Identity.IsMaster();
+}
 <style>
     #customer-view .table-dark:hover{
         color: #808080;
     }
 </style>
 <div id="customer-view">
-    <p class="mt-2">
-        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-outline-success" })
-    </p>
+    @if (isMaster)
+    {
+        <p class="mt-2">
+            @Html.ActionLink("+", "Create", null, new { @class = "btn btn-outline-success" })
+        </p>
+    }
+
     @Html.ActionLink("Ver Diagrama", "CustomersGraphic","Customers",null,null)
     @*<a href="@Url.Action("CreateAll")">Create all</a>*@
     <table class="table table-hover">
@@ -40,14 +46,14 @@
                     @Html.DisplayFor(modelItem => item.SponsorID)
                 </td>
                 <td>
-                    @if(item.ID != 0) //Validating if it's master account 
+                    @if(isMaster) //Validating if it's master account 
                     {
                         <text>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @*<a href="@Url.Action("Edit","Customers", new { id = item.ID })" ><i class="bi bi-pencil-fill"></i> </a>*@
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        @Html.ActionLink("RegisterOne", "RegisterOne","Account", new { id = item.ID },null)
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                        @*@Html.ActionLink("RegisterOne", "RegisterOne","Account", new { id = item.ID },null)*@
                         </text>
                     }
                 </td>

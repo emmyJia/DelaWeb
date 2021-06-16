@@ -34,49 +34,23 @@
             @Html.DisplayFor(model => model.Type)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Other1)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Other1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Other2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Other2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Other3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Other3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Other4)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Other4)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Other5)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Other5)
+            @foreach (var item in Model.Details)
+            {
+                <p>@item.Quantity - @item.ProductID - @item.Price </p>
+            }
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |*@
+    @if (User.Identity.IsMaster())
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
+    else
+    {
+        @Html.ActionLink("Volver","Details", "Customers", new { id = User.Identity.GetCustomerID() },null)
+    }
 </p>

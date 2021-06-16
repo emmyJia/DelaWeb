@@ -1,0 +1,21 @@
+﻿@import "views/buttons.scss";
+
+body {
+    background-color: $whitebackground;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    background-color:$whitebackground;
+    width:59%;
+}
+
+.footer-space{
+    height:40px;
+    display:block;
+}
+
+select {
+    max-width:none;
+}

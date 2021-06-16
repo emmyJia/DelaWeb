@@ -1,0 +1,18 @@
+﻿a {
+  color: #008c38; }
+
+body {
+  background-color: #EDFCFF; }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  background-color: #EDFCFF;
+  width: 59%; }
+
+.footer-space {
+  height: 40px;
+  display: block; }
+
+select {
+  max-width: none; }

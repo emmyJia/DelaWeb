@@ -25,11 +25,17 @@
                 @Html.HiddenFor(c => c.CustomerID)
                 @Html.HiddenFor(c => c.Type, new { Value = 1 })
 
-                <div class="col-sm-8 form-group">
+                <div class="col-sm-6 form-group">
                     @Html.Label("Agregar Productos", htmlAttributes: new { @class = "control-label " })
                     <div class="row">
                         <div class="col-md-8 d-inline-block">
-                            @Html.DropDownList("Product", Html.Products(), new { @class = "form-control", style = "max-width: none; width: 100%;" })
+                            @*@Html.DropDownList("Product", Html.Products(), new { @class = "form-control", style = "max-width: none; width: 100%;" })*@
+                            <select class="form-control" name="products" id="Product">
+                                @foreach (var item in DelaWeb.Service.ProductsService.GetAllProducts())
+                                {
+                                    <option value="@item.ItemID" data-price="@item.Price"data-name="@item.Name">@item.Name</option>
+                                }
+                            </select>
                         </div>
                         <div class="col-md-2 d-inline-block">
                             @Html.TextBox("Cantidad", "1", new { @class = "form-control", type = "number" })
@@ -40,19 +46,19 @@
                     </div>
                 </div>
 
-                <div class="col-sm-4" id="item-list">
-                    <table>
+                <div class="col-sm-6" id="item-list">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Con Desc.</th>
-                                <th></th>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!--Dinamically Inyected-->
                         </tbody>
                     </table>
 
@@ -72,8 +78,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 <script>
-        var $context = $('.form-horizontal');
-
+    var $context = $('#create-order-view');
 
         var cont = 1;
         var items = [];
@@ -84,36 +89,39 @@
 
     $('#add-item').on('click', function (e) {
         $(this).button('loading');
-        var nombre = $('#Product option:selected').text();
-        var code = $('#Product').val();
+        var nombre = $('#Product option:selected').data('name');
+        var code = $('#Product option:selected').val();
         var cant = $('#Cantidad').val();
-        var prod = getProductInfo(code);
+        var price = $('#Product option:selected').data('price');
 
-        var htm = "<tr data-item='" + cont + "'><td>" + cont + "</td><td>" + nombre + "</td><td>" + cant + "</td><td>" + prod.Price + "</td><td>" + prod.DiscountPrice + "</td><td><a class='remove-item' data-item='" + cont + "'>Quitar</a></td></tr>"
+        var htm = "<tr scope='row' data-item='" + cont + "'><td>" + code + "</td><td>" + nombre + "</td><td>" + cant + "</td><td>" + price + "</td><td><a class='remove-item' data-item='" + cont + "'>Quitar</a></td></tr>"
         $itemlist.append(htm);
         var json = { Index: cont, Code: code, Name: nombre, Quantity: cant };
         items.push(json);
-
+        $(this).button('reset');
+        $('#Cantidad').val(1);
         cont++;
     });
 
     $context.on('click', '.remove-item', function () {
+        debugger;
         var id = $(this).data('item');
         $('tr[data-item="' + id + '"]').remove();
 
         for (var i = 0; i < items.length; i++) {
-            if (id == items[i].index) {
+            if (id == items[i].Index) {
                 items.splice(i,1);
+                //items[i].Quantity = 0;
             }
         }
-
+        console.log(items);
     });
 
     $("#submit").on("click", function () {
-        debugger;
         var data = {};
         let customer = $('[name="CustomerID"').val();
         let type = $('[name="Type"').val();
+
         data.items = JSON.stringify(items);
         data.customerid = customer;
         data.type = type;
@@ -140,26 +148,26 @@
         });
     });
 
-    function getProductInfo(c) {
+    //function getProductInfo(c) {
 
-        $.ajax({
-            type: "POST",
-            url: getProductUrl,
-            content: "application/json; charset=utf-8",
-            dataType: "json",
-            data: { itemCode: c },
-            success: function (d) {
-                if (d.success == true) {
-                    return d;
-                }
-                else {
-                    return false;
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                    return false;
-            }
-        });
-    }
+    //    $.ajax({
+    //        type: "POST",
+    //        url: getProductUrl,
+    //        content: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        data: { itemCode: c },
+    //        success: function (d) {
+    //            if (d.success == true) {
+    //                return d;
+    //            }
+    //            else {
+    //                return false;
+    //            }
+    //        },
+    //        error: function (xhr, textStatus, errorThrown) {
+    //                return false;
+    //        }
+    //    });
+    //}
 </script>
 }

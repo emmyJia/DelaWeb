@@ -11,6 +11,7 @@ namespace DelaWeb.Models
         public Order()
         {
             Date = DateTime.Now;
+            Details = new List<OrderDetails>();
         }
 
         [Key]

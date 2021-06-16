@@ -30,7 +30,8 @@ namespace DelaWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.FirstOrDefault(c=>c.OrderID == id);
+            order.Details = db.OrderDetails.Where(c => c.OrderID == id).ToList();
             if (order == null)
             {
                 return HttpNotFound();
@@ -76,13 +77,19 @@ namespace DelaWeb.Controllers
                 order.Date = DateTime.Now;
                 order.Type = type;
                 var details = new List<OrderDetails>();
-                foreach (var item in listitems)
+                
+
+                //order.Details = details;
+                order = db.Orders.Add(order);
+                db.SaveChanges();
+
+                foreach (var item in listitems.Where(i => i.Quantity > 0))
                 {
-                    details.Add(new OrderDetails { ProductID = Int32.Parse(item.Code), OrderID = order.OrderID, Quantity = item.Quantity });
+                    var itemDB = db.Products.Find(item.Code);
+                    details.Add(new OrderDetails { ProductID = Int32.Parse(item.Code), OrderID = order.OrderID, Quantity = item.Quantity, Price = itemDB.Price });
                 }
 
-                order.Details = details;
-                db.Orders.Add(order);
+                db.OrderDetails.AddRange(details);
                 db.SaveChanges();
 
                 return new JsonNetResult(new { 

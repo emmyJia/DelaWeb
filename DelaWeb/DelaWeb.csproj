@@ -191,7 +191,16 @@
     <Compile Include="Migrations\202103111307470_BonusesAdding.Designer.cs">
       <DependentUpon>202103111307470_BonusesAdding.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104270201293_NuevosCamposCustomer.cs" />
+    <Compile Include="Migrations\202104270201293_NuevosCamposCustomer.Designer.cs">
+      <DependentUpon>202104270201293_NuevosCamposCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106160103206_OrderDetails.cs" />
+    <Compile Include="Migrations\202106160103206_OrderDetails.Designer.cs">
+      <DependentUpon>202106160103206_OrderDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppExtensions.cs" />
     <Compile Include="Models\Bonus.cs" />
     <Compile Include="Services\ProductsService.cs" />
     <Compile Include="Services\OrdersService.cs" />
@@ -216,12 +225,25 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Imagenes\pp.jpg" />
+    <Content Include="Content\styles\site.css">
+      <DependentUpon>site.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\styles\site.scss" />
+    <Content Include="Content\styles\views\buttons.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\styles\views\colors.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -290,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\styles\bootstrap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -313,6 +336,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103111307470_BonusesAdding.resx">
       <DependentUpon>202103111307470_BonusesAdding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104270201293_NuevosCamposCustomer.resx">
+      <DependentUpon>202104270201293_NuevosCamposCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106160103206_OrderDetails.resx">
+      <DependentUpon>202106160103206_OrderDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

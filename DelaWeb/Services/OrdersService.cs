@@ -27,6 +27,13 @@ namespace DelaWeb.Service
                 list = (from c in context.Orders
                         where c.CustomerID==customerID
                         select c).ToList();
+            
+                foreach (var item in list)
+                {
+                    item.Details = (from od in context.OrderDetails
+                                    where od.OrderID == item.OrderID
+                                    select od).ToList();
+                }
             }
 
             return list;
