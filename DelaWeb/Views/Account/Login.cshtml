@@ -45,21 +45,9 @@
                     
                 </div>
                 
-                @* Habilite esta opción una vez tenga la confirmación de la cuenta habilitada para la funcionalidad de restablecimiento de contraseña
-                    <p>
-                        @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
-                    </p>*@
             }
         </section>
     </div>
-    @*<div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>*@
+  
 </div>
 @Html.Partial("_Deli")
-
-@section Scripts {
-    @*@Scripts.Render("~/bundles/jqueryval")*@
-}

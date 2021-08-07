@@ -10,7 +10,7 @@
 <div class="deli-dialog">
     <img src="~/Content/Imagenes/Globo.png" />
     <div class="dialog-text">
-        @if (isLogin)
+        @*@if (isLogin)
         {
             <h3>Bienvenido</h3>
             <p class="">
@@ -30,7 +30,13 @@
                 Este es tu sitio de negocio.
             </p>
 
-        }
+        }*@
+        <h3>Bienvenido</h3>
+        <b>@User.Identity.Name</b>
+        <br />
+        <p class="">
+            Este es tu sitio de negocio.
+        </p>
 
     </div>
 </div>

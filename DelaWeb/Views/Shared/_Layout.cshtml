@@ -24,7 +24,7 @@
             paths: {
                 'ajax': 'modules/ajax',
                 'swal': "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min",
-                'bootstrap': 'vendor/bootstrap.min',
+                //'bootstrap': 'vendor/bootstrap.min',
                 'jquery': 'vendor/jquery-3.4.1.min',
                 'jquery-validate': 'vendor/jquery.validate.min',
                // 'cookies': 'modules/cookies',
@@ -136,8 +136,8 @@
         </div>
     </footer>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

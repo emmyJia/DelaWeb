@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Home Page";
     //var isLogged = ((bool)(ViewBag.session ?? false));
-    var isMaster = ((bool)(ViewBag.isMaster ?? false));
+    //var isMaster = ((bool)(ViewBag.isMaster ?? false));
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -13,7 +13,7 @@
         <div class="offset-8 col-sm-4">
             <div class="transparent-div">
                 <h4 class="text-center">ACCESO RAPIDO</h4>
-                @if (isMaster)
+                @*@if (isMaster)
                 {
                     <div class="col-sm-12 pb-2"><a id="consultar-Orden"><i class="fa fa-details"></i>Consultar Orden por ID</a></div>
 
@@ -22,8 +22,7 @@
                 {
                     <div class="col-sm-12 pb-2"><a href="@Url.Action("Create","Orders")">Crear una Orden</a></div>
                     <div class="col-sm-12 pb-2"><a href="@Url.Action("ChangePassword","Manage")">Cambiar Contraseña</a></div>
-                    @*<div class="col-sm-12 pb-2"><a href="">Salir</a></div>*@
-                }
+                }*@
             </div>
         </div>
     </div>
@@ -81,10 +80,10 @@
             });
         </script>*@
 }
-<script>
-    require(["jquery"], function ($) {
+@*<script>
+    require(["jquery"], function ($) {*@
 
-        var isMaster = @isMaster.ToString().ToLower();
+        @*var isMaster = @isMaster.ToString().ToLower();*@
         @*if (isMaster) {
 
             $('#consultar-Orden').on('click', function () {
@@ -115,6 +114,6 @@
                 }
             });
         }*@
-    });
+    @*});
 
-</script>
+</script>*@

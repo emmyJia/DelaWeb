@@ -231,7 +231,9 @@
     <Content Include="Content\Imagenes\Products\Aceite CBD_1000.png" />
     <Content Include="Content\Imagenes\Products\Aceite CBD_2500.png" />
     <Content Include="Content\Imagenes\Products\Aceite_Arbol.png" />
+    <Content Include="Content\Imagenes\Products\AjoNegro-Perejil_capsulas.png" />
     <Content Include="Content\Imagenes\Products\Amenia plus_caps.png" />
+    <Content Include="Content\Imagenes\Products\Arnica_capsulas.png" />
     <Content Include="Content\Imagenes\Products\CBD+Arnica_Cream.png" />
     <Content Include="Content\Imagenes\Products\Chromium_picolinate_capsulas.png" />
     <Content Include="Content\Imagenes\Products\Colageno_guanabana_polvo.png" />
@@ -240,6 +242,7 @@
     <Content Include="Content\Imagenes\Products\Detox plus_polvo.png" />
     <Content Include="Content\Imagenes\Products\Diabetes plus_caps.png" />
     <Content Include="Content\Imagenes\Products\Diabetes plus_te.png" />
+    <Content Include="Content\Imagenes\Products\Echinacea_capsulas.png" />
     <Content Include="Content\Imagenes\Products\Fish oil_caps.png" />
     <Content Include="Content\Imagenes\Products\Ganoderm Coffee_te_papel.png" />
     <Content Include="Content\Imagenes\Products\Gastritis plus_caps.png" />

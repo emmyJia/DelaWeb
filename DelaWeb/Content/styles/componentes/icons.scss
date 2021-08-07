@@ -3,16 +3,6 @@
     content: url(../Imagenes/Detalles.png);
     height: 10px;
 }*/
-.di-details::before {
-    background-image: url('../../Imagenes/Detalles.png');
-    background-size: 30px 35px;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 30px;
-    height: 35px;
-    content: "";
-}
-
 .di-details::after {
     background-image: url('../Imagenes/Detalles.png');
     background-size: 30px 35px;
@@ -23,28 +13,8 @@
     content: "";
 }
 
-.di-editbefore {
-    background-image: url('../../Imagenes/Editar.png');
-    background-size: 30px 35px;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 30px;
-    height: 35px;
-    content: "";
-}
-
 .di-edit::after {
     background-image: url('../Imagenes/Editar.png');
-    background-size: 30px 35px;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 30px;
-    height: 35px;
-    content: "";
-}
-
-.di-delete::before {
-    background-image: url('../../Imagenes/Eliminar.png');
     background-size: 30px 35px;
     background-repeat: no-repeat;
     display: inline-block;
