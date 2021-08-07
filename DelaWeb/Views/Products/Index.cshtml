@@ -4,12 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de productos</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-hover deli-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ItemCode)
@@ -17,9 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
@@ -29,71 +29,44 @@
         <th>
             @Html.DisplayNameFor(model => model.Bonus)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other5)
-        </th>
-        <th></th>
+        </th>*@
+        <th width="100"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemCode)
+    @foreach (var item in Model) {
+        <tr class="table-secondary">
+            <td>
+                @item.ItemCode.PadLeft(4, '0')
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bonus)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>*@
+        <td colspan="3">
+            <a href="@Url.Action("Edit","Products",new { id = item.ItemID })"><i class="di-edit"></i></a>
+            <a href="@Url.Action("Details","Products",new { id = item.ItemID })"><i class="di-details"></i></a>
+            <a href="@Url.Action("Delete","Products",new { id = item.ItemID })"><i class="di-delete"></i></a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.ItemID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ItemID })*@
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiscountPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bonus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other5)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ItemID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ItemID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ItemID })
-        </td>
-    </tr>
-}
+        </tr>
+    }
 
 </table>

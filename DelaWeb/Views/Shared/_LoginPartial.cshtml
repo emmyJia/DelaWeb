@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+@if (User.Identity.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right d-flex float-right ml-auto mr-0" }))
     {
@@ -8,7 +8,7 @@
         <li class="nav-item">
             @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
         </li>
-        <li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+        <li class="nav-item mt-auto"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
     }
     
     @*<li class="nav-item">@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>*@
@@ -16,6 +16,8 @@
 else
 {
     @*<ul class="nav navbar-nav navbar-right navbar-dark">*@
-    <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    if (Request.Url.AbsolutePath != "/" && Request.Url.AbsolutePath.ToLower()!="/account/login") { 
+        <li class="nav-item mt-auto">@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link bold", style="font-size:24px" })</li>
+    }
     @*</ul>*@
 }

@@ -1,75 +1,54 @@
-﻿@model IEnumerable<DelaWeb.Models.Order>
+﻿@model DelaWeb.ViewModels.OrdersViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de ordenes</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-hover deli-table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            OrderID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerID)
+            Fecha de Orden
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            Distribuidor
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Other1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Other5)
+            Total (Items)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Other5)
-        </td>
-        <td>
-            @*Html.ActionLink("Edit", "Edit", new { id=item.OrderID }) |*@
-            @Html.ActionLink("Details", "Details", "Orders", new { id = item.OrderID }, null) 
-            @*@Html.ActionLink("Delete", "Delete", "Orders", null, new { id=item.OrderID })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Orders) {
+        <tr class="table-secondary">
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @item.Total.ToString("C") (@item.Items)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }, new { }) |*@
+                <a href="@Url.Action( "Edit", "Orders", new { id = item.OrderID })"><i class="di-edit"></i></a>
+
+                @*@Html.ActionLink("Details",, new { id = item.OrderID },null)*@
+                <a href="@Url.Action( "Details", "Orders", new { id = item.OrderID })"><i class="di-details"></i></a>
+                @*@Html.ActionLink("Delete", "Delete", "Orders", null, new { id=item.OrderID })*@
+            </td>
+        </tr>
+    }
 
 </table>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace DelaWeb.Models
 {
@@ -31,9 +29,19 @@ namespace DelaWeb.Models
     {
         public int ID { get; set; }
         public int OrderID { get; set; }
-        public int  ProductID { get; set; }
+        public int ProductID { get; set; }
         public decimal Price { get; set; }
         public decimal Bonus { get; set; }
         public int Quantity { get; set; }
+    }
+
+    public enum OrderStatus
+    {
+        Creada,
+        Cancelada,
+        Eliminada,
+        Verificada,
+        Pagada,
+        Enviada
     }
 }

@@ -1,18 +1,19 @@
-﻿using System;
+﻿using App.Extensions;
+using DelaWeb.Models;
+using DelaWeb.Service;
+using DelaWeb.ViewModels;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using DelaWeb.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -20,7 +21,24 @@ namespace DelaWeb.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            return View(db.Orders.ToList());
+            var model = new ViewModels.OrdersViewModel();
+            var orders = db.Orders.ToList().OrderByDescending(i => i.Date);
+
+            foreach (var item in orders)
+            {
+                var det = OrdersService.GetOrderDetailsByID(item.OrderID);
+                if (det.Any())
+                    model.Orders.Add(new OrderViewModel
+                    {
+                        OrderID = item.OrderID.ToString(),
+                        OrderDate = item.Date.ToShortDateString(),
+                        CustomerID = item.CustomerID,
+                        CustomerName = Customers.GetCustomerByID(item.CustomerID).Name,
+                        Items = det.Sum(i => i.Quantity),
+                        Total = det.Sum(i => i.Price * i.Quantity)
+                    });
+            }
+            return View(model);
         }
 
         // GET: Orders/Details/5
@@ -30,19 +48,39 @@ namespace DelaWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.FirstOrDefault(c=>c.OrderID == id);
-            order.Details = db.OrderDetails.Where(c => c.OrderID == id).ToList();
+            var model = new OrderDetailsViewModel();
+            Order order = db.Orders.FirstOrDefault(c => c.OrderID == id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+
+            order.Details = db.OrderDetails.Where(c => c.OrderID == id).ToList();
+            model.CustomerName = Customers.GetCustomerByID(order.CustomerID).Name;
+            model.Order = order;
+
+            foreach (var item in order.Details)
+            {
+                var iteminfo = ProductsService.GetProductDescriptionByID(item.ProductID);
+                var _item = new ItemDetails
+                {
+                    ItemCode = item.ID.ToString(),
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    ItemDescription = iteminfo,
+                };
+
+                model.Details.Add(_item);
+            }
+
+            return View(model);
         }
 
         // GET: Orders/Create
         public ActionResult Create(int customerID = 0, string redirectTo = "")
         {
-            ViewBag.CustomerID = customerID;
+            ViewBag.CustomerID = customerID == 0 ? User.Identity.GetCustomerID() : customerID.ToString();
             ViewBag.RedirectTo = redirectTo;
             return View();
         }
@@ -77,7 +115,7 @@ namespace DelaWeb.Controllers
                 order.Date = DateTime.Now;
                 order.Type = type;
                 var details = new List<OrderDetails>();
-                
+
 
                 //order.Details = details;
                 order = db.Orders.Add(order);
@@ -85,18 +123,20 @@ namespace DelaWeb.Controllers
 
                 foreach (var item in listitems.Where(i => i.Quantity > 0))
                 {
-                    var itemDB = db.Products.Find(item.Code);
+                    var itemid = Int32.Parse(item.Code);
+                    var itemDB = db.Products.FirstOrDefault(i => i.ItemID == itemid);
                     details.Add(new OrderDetails { ProductID = Int32.Parse(item.Code), OrderID = order.OrderID, Quantity = item.Quantity, Price = itemDB.Price });
                 }
 
                 db.OrderDetails.AddRange(details);
                 db.SaveChanges();
 
-                return new JsonNetResult(new { 
+                return new JsonNetResult(new
+                {
                     success = true
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new JsonNetResult(new
                 {
@@ -168,6 +208,12 @@ namespace DelaWeb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult UpdateOrderStatus()
+        {
+
+            return View();
         }
     }
 }

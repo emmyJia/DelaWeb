@@ -1,8 +1,7 @@
-﻿using System;
+﻿using DelaWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using DelaWeb.Models;
 
 namespace DelaWeb.Service
 {
@@ -11,23 +10,39 @@ namespace DelaWeb.Service
         public static List<Product> GetAllProducts()
         {
             var list = new List<Models.Product>();
-            using (var context = new  ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
                 list = (from c in context.Products
-                            select c).ToList();
+                        select c).ToList();
             }
-            
+            foreach (var item in list)
+            {
+                item.DiscountPrice = Decimal.Round((item.Price / 2), 2);
+            }
+
             return list;
         }
-        
+
+        public static string GetProductDescriptionByID(int productID)
+        {
+            var product = "";
+            using (var context = new ApplicationDbContext())
+            {
+                product = (from c in context.Products
+                           where c.ItemID == productID
+                           select c.Name).FirstOrDefault();
+            }
+
+            return product;
+        }
         public static Product GetProductByID(int productID)
         {
             var invoice = new Models.Product();
             using (var context = new ApplicationDbContext())
             {
                 invoice = (from c in context.Products
-                        where c.ItemID == productID
-                        select c).FirstOrDefault();
+                           where c.ItemID == productID
+                           select c).FirstOrDefault();
             }
 
             return invoice;
@@ -50,7 +65,7 @@ namespace DelaWeb.Service
             }
 
         }
-        
+
         public static bool DeleteProduct(int productID)
         {
             try

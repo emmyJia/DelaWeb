@@ -1,0 +1,17 @@
+﻿@import "colors.scss";
+
+.table.deli-table {
+
+    .table-secondary td {
+        background-color: #d2e6cd;
+        color: $gray;
+        border: 5px solid rgba(255,255,255,0.5);
+    }
+
+
+    th {
+        background-color: $gray;
+        color: white;
+        border-right: 5px solid rgba(255,255,255,0.5);
+    }
+}

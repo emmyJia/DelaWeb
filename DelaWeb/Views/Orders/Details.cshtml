@@ -1,47 +1,108 @@
-﻿@model DelaWeb.Models.Order
-
+﻿@using DelaWeb.Models;
+@using App.Extensions
+@model DelaWeb.ViewModels.OrderDetailsViewModel
 @{
+    var isMaster = ((bool)(ViewBag.isMaster ?? false));
+
     ViewBag.Title = "Details";
+    var status = Model.Order.Other1;
 }
 
-<h2>Details</h2>
+<h2>Detalles de la Orden</h2>
 
 <div>
-    <h4>Order</h4>
     <hr />
+    @if (isMaster)
+    {
+
+        <h3>Status</h3>
+        <div id="statusButtons">
+            <div class="">
+                <input type="radio" class="btn-check" value="Creada" name="options-outlined" id="creada-outlined" autocomplete="off" @(status == OrderStatus.Creada.ToString() ? "checked" : "")>
+                <label class="btn btn-outline-secondary" for="success-outlined">Creada</label>
+            </div>
+            <div class="">
+                <input type="radio" class="btn-check" value="Cancelada" name="options-outlined" id="cancelada-outlined" autocomplete="off" @(status == OrderStatus.Cancelada.ToString() ? "checked" : "")>
+                <label class="btn btn-outline-danger" for="success-outlined">Cancelada</label>
+            </div>
+            <div class="">
+                <input type="radio" class="btn-check" value="Verificada" name="options-outlined" id="verificada-outlined" autocomplete="off" @(status == OrderStatus.Verificada.ToString() ? "checked" : "")>
+                <label class="btn btn-outline-primary" for="success-outlined">Verificada</label>
+            </div>
+            <div class="">
+                <input type="radio" class="btn-check" value="Pagada" name="options-outlined" id="pagada-outlined" autocomplete="off" @(status == OrderStatus.Pagada.ToString() ? "checked" : "")>
+                <label class="btn btn-outline-success" for="success-outlined">Pagada</label>
+            </div>
+            <div class="">
+                <input type="radio" class="btn-check" value="Enviada" name="options-outlined" id="enviada-outlined" autocomplete="off" @(status == OrderStatus.Enviada.ToString() ? "checked" : "")>
+                <label class="btn btn-outline-success" for="success-outlined">Enviada</label>
+            </div>
+        </div>
+    }
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            Fecha de creación
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date)
+            @Html.DisplayFor(model => model.Order.Date)
         </dd>
 
+        @if (User.Identity.IsMaster())
+        {
+            <dt>
+                Distribuidor
+            </dt>
+            <dd>
+                (@Model.Order.CustomerID) @Model.CustomerName
+            </dd>
+        }
+        <div class="space-20"></div>
         <dt>
-            @Html.DisplayNameFor(model => model.CustomerID)
+            PRODUCTOS
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CustomerID)
-        </dd>
+        @*<dt>
+                Cantidad - Producto - Precio
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dd>
-            @foreach (var item in Model.Details)
-            {
-                <p>@item.Quantity - @item.ProductID - @item.Price </p>
-            }
-        </dd>
-
+            <dd>
+                @foreach (var item in Model.Details)
+                {
+                <p>@item.Quantity - (@item.ItemCode) @item.ItemDescription - @item.Price </p>
+                }
+            </dd>
+        *@
     </dl>
+
+    <table class="table table-hover deli-table">
+        <tr>
+            <th>Cantidad</th>
+            <th>Producto</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (var item in Model.Details)
+        {
+            <tr class="table-secondary">
+                <td>@item.Quantity</td>
+                <td>(@item.ItemCode) @item.ItemDescription</td>
+                <td class="text-right">@item.Price</td>
+            </tr>
+        }
+        <tfoot>
+            <tr>
+                <td></td>
+                <td class="float-right">Total</td>
+                <td class="text-right"> @((Model.Details.Sum(i => i.Quantity * i.Price )).ToString("$0.00"))</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="float-right">Desc. 50%</td>
+                <td class="text-right"> @((Model.Details.Sum(i => i.Quantity * i.Price )/2).ToString("$0.00")) </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |*@
@@ -51,6 +112,19 @@
     }
     else
     {
-        @Html.ActionLink("Volver","Details", "Customers", new { id = User.Identity.GetCustomerID() },null)
+        @Html.ActionLink("Volver", "Details", "Customers", new { id = User.Identity.GetCustomerID() }, null)
     }
 </p>
+
+<script>
+    require(["jquery","ajax"], function ($,ajax) {
+        $('#statusButtons .btn-check').on('click', () => {
+            ajax.json({
+                url: '@Url.Action("UdateOrderStatus","Orders")',
+                success: function () {
+                    console.log("Listo!");
+                }
+            });
+        });
+    });
+</script>

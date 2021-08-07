@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using DelaWeb.Models;
+using DelaWeb.Service;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using DelaWeb.Models;
-using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Products
+        [Authorize]
+
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
 
+        [Authorize]
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,6 +37,7 @@ namespace DelaWeb.Controllers
             return View(product);
         }
 
+        [Authorize]
         // GET: Products/Create
         public ActionResult Create()
         {
@@ -46,6 +48,7 @@ namespace DelaWeb.Controllers
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ItemID,ItemCode,Name,Description,Price,DiscountPrice,Bonus,Type,Other1,Other2,Other3,Other4,Other5")] Product product)
         {
@@ -59,6 +62,7 @@ namespace DelaWeb.Controllers
             return View(product);
         }
 
+        [Authorize]
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -77,6 +81,7 @@ namespace DelaWeb.Controllers
         // POST: Products/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ItemID,ItemCode,Name,Description,Price,DiscountPrice,Bonus,Type,Other1,Other2,Other3,Other4,Other5")] Product product)
@@ -90,6 +95,7 @@ namespace DelaWeb.Controllers
             return View(product);
         }
 
+        [Authorize]
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -105,6 +111,7 @@ namespace DelaWeb.Controllers
             return View(product);
         }
 
+        [Authorize]
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -116,6 +123,7 @@ namespace DelaWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult GetItemInfo(string itemCode)
         {

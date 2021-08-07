@@ -50,6 +50,19 @@ namespace DelaWeb.Service
 
             return order;
         }
+
+        public static List<OrderDetails> GetOrderDetailsByID(int orderid)
+        {
+            var list = new List<OrderDetails>();
+            using (var context = new ApplicationDbContext())
+            {
+                list = (from c in context.OrderDetails
+                        where c.OrderID == orderid
+                        select c).ToList();
+            }
+
+            return list;
+        }
         public static bool CreateOrder(Order c)
         {
             try

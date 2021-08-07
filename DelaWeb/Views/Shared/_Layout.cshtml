@@ -1,30 +1,83 @@
-﻿<!DOCTYPE html>
+﻿@using App.Extensions
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Dela</title>
+
+    <title>@ViewBag.Title - Dela - @((bool)(ViewBag.isMaster ?? false)?"Master":"Retail")</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.js"></script>*@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" data-main="@Url.Content("~/Content/scripts/main.js")"></script>
+    <script>
+        require.config({
+            baseUrl: '@Url.Content("~/Content/scripts")',
+            @if (Request.IsLocal)
+            { <text>urlArgs: "bust=" + (new Date()).getTime(),</text> }
+            paths: {
+                'ajax': 'modules/ajax',
+                'swal': "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min",
+                'bootstrap': 'vendor/bootstrap.min',
+                'jquery': 'vendor/jquery-3.4.1.min',
+                'jquery-validate': 'vendor/jquery.validate.min',
+               // 'cookies': 'modules/cookies',
+               // 'mask': 'vendor/jquery.mask.min'
+               // 'jquery-ui': 'https://code.jquery.com/ui/1.11.4/jquery-ui.min',
+               // 'kendo': 'vendor/kendo/scripts/kendo.web.min',
+               // 'kendo-cultures': 'vendor/kendo/scripts/kendo.culture.min',
+                'toastr': 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min',
+               // 'handlebars4': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min',
+            },
+            shim: {
+                'bootstrap': {
+                    deps: ["jquery"]
+                }
+                //,'jquery-nicescroll': {
+                //    deps: ['jquery']
+                //},
+            }
+        });
+
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-full">
+        <div class="img-container">
+            <img src="~/Content/Imagenes/Navbar.png" />
+        </div>
+        <div class="logo-container position-absolute">
+            <a class="navbar-brand image-logo" href="@Url.Action("Index","Home")">
+                <img src="~/Content/Imagenes/Dela BCO.png" style="height: 110px;" />
+            </a>
+        </div>
         <div class="container">
-                <a class="navbar-brand" href="#">Dela <img /></a>
+            <nav class="navbar navbar-expand-lg navbar-dark ">
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto w-100">
+                    <ul class="navbar-nav mr-auto w-100 mt-auto">
                         <li class="nav-item @(ViewBag.Title=="Home Page" ?"active" :"")">
-                            <a class="nav-link" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                <img src="~/Content/Imagenes/home bco.png" style="height: 60px; " />
+                            </a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            //var customerId = User.Identity.GetCustomerID();
-                            var isMaster = User.Identity.IsMaster(); //customerType == (int)DelaWeb.Models.CustomerType.Master;
+                            var isMaster = User.Identity.IsAuthenticated && User.Identity.IsMaster();
 
                             if (isMaster)
                             {
@@ -54,23 +107,37 @@
                     </ul>
 
                     @*<form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
-                    </form>*@
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                        </form>*@
                 </div>
+            </nav>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <div class="footer-space"></div>
-        <footer >
-            <hr />
-            <p>&copy; @DateTime.Now.Year - Dela Incorporation</p>
-        </footer>
     </div>
+    <div class="navbar-space"></div>
+    <div class="body-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+        <div class="footer-space"></div>
+    </div>
+    <div class="social-networks">
+        <div class="item"><a target="_blank" href="https://www.instagram.com/delaplusoficial/"><img src="~/Content/Imagenes/Ig.png" /></a></div>
+        <div class="item"><a target="_blank" href="https://www.facebook.com/search/top?q=dela%20body%20plus%20beauty%20oficial"><img src="~/Content/Imagenes/Fb.png" /></a></div>
+    </div>
+    <footer>
+        <div clsas="footer-content">
+            <p class="d-flex float-left mb-0 pl-5 pt-3">&copy; @DateTime.Now.Year - Dela Incorporation</p>
+            <p class="d-flex float-right mb-0">
+                <span id="siteseal">
+                    <script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=al07J9fXqIXLeQCW0fZshe6Mm0zU1Ekf3iKWgyJJblFJupFSt075OAz8IyH8"></script>
+                </span>
+            </p>
+        </div>
+    </footer>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

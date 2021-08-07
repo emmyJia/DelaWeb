@@ -1,21 +1,8 @@
-﻿@import "views/buttons.scss";
+﻿/*@import "fonts/fonts.scss";*/
 
-body {
-    background-color: $whitebackground;
-}
+@import "componentes/buttons.scss";
+@import "componentes/forms.scss";
+@import "componentes/tables.scss";
+@import "componentes/icons.scss";
 
-footer {
-    position: fixed;
-    bottom: 0;
-    background-color:$whitebackground;
-    width:59%;
-}
-
-.footer-space{
-    height:40px;
-    display:block;
-}
-
-select {
-    max-width:none;
-}
+@import "views/site.scss";

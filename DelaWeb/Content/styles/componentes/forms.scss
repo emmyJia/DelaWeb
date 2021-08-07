@@ -1,0 +1,10 @@
+﻿@import "colors.scss";
+
+.form-control {
+    background-color: $grayforms;
+    color: $graytext;
+    font-weight: 400;
+    font-size: 24px;
+    //text-transform: uppercase;
+    border-radius: 15px;
+}

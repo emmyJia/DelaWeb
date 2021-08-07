@@ -1,47 +1,120 @@
-﻿@{
+﻿@using App.Extensions
+@{
     ViewBag.Title = "Home Page";
+    //var isLogged = ((bool)(ViewBag.session ?? false));
+    var isMaster = ((bool)(ViewBag.isMaster ?? false));
 }
 
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+@if (User.Identity.IsAuthenticated)
+{
+    //var isMaster = User.Identity.IsMaster();
+
+    <div class="row mt-5">
+        <div class="offset-8 col-sm-4">
+            <div class="transparent-div">
+                <h4 class="text-center">ACCESO RAPIDO</h4>
+                @if (isMaster)
+                {
+                    <div class="col-sm-12 pb-2"><a id="consultar-Orden"><i class="fa fa-details"></i>Consultar Orden por ID</a></div>
+
+                }
+                else
+                {
+                    <div class="col-sm-12 pb-2"><a href="@Url.Action("Create","Orders")">Crear una Orden</a></div>
+                    <div class="col-sm-12 pb-2"><a href="@Url.Action("ChangePassword","Manage")">Cambiar Contraseña</a></div>
+                    @*<div class="col-sm-12 pb-2"><a href="">Salir</a></div>*@
+                }
+            </div>
+        </div>
+    </div>
+
+}
+<div class="modal" id="order-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Introduce el ID de la Orden</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="orderid" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="consultar-orden">Consultar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>*@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-9">
-            <img src="~/Content/Imagenes/pp.jpg" />
-        </div>
-        <div class="col-sm-3 mt-4" style="border: 1px solid black">
-            <h3>Accesos Directos</h3>
-            <ul style="list-style: none;">
-                <li>Acceso Directo 1</li>
-                <li>Acceso Directo 2</li>
-                <li>Acceso Directo 3</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<img />
+
+@Html.Partial("_Deli")
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+
+    @*<script>
+        console.log(User.Identity.IsAuthenticated);
+        console.log(User.Identity);
+        $('#consultar-Orden').on('click', function () {
+                (async () => {
+                    const { value: orderid } = await Swal.fire({
+                    title: 'Consultar orden',
+                    input: 'text',
+                    inputLabel: 'OrderID',
+                    inputPlaceholder: 'Introduce el ID de la orden',
+                    inputAttributes: {
+                        maxlength: 10,
+                        autocapitalize: 'off',
+                        autocorrect: 'off'
+                    }
+                    });
+
+                    if (orderid) {
+                        console.log('@Html.Action("Details","Orders")' + "?id=" + orderid);
+                        window.location = '@Url.Action("Details","Orders")' + "?id=" + orderid;
+                    }
+                })()
+
+            });
+        </script>*@
+}
+<script>
+    require(["jquery"], function ($) {
+
+        var isMaster = @isMaster.ToString().ToLower();
+        @*if (isMaster) {
+
+            $('#consultar-Orden').on('click', function () {
+                (async () => {
+                    const { value: orderid } = await Swal.fire({
+                    title: 'Consultar orden',
+                    input: 'text',
+                    inputLabel: 'OrderID',
+                    inputPlaceholder: 'Introduce el ID de la orden',
+                    inputAttributes: {
+                        maxlength: 10,
+                        autocapitalize: 'off',
+                        autocorrect: 'off'
+                    }
+                    });
+
+                    if (orderid) {
+                        console.log('@Html.Action("Details","Orders")' + "?id=" + orderid);
+                        window.location = '@Url.Action("Details","Orders")' + "?id=" + orderid;
+                    }
+                })()
+            });
+
+            $('#consultar-orden').on('click', () => {
+                var orderID= $('#orderid').val();
+                if (orderID !== "" && orderID.isNumeric()) {
+                    window.location = '@Url.Action("Details","Orders")' + '?id=' + orderID;
+                }
+            });
+        }*@
+    });
+
+</script>

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using DelaWeb.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using DelaWeb.Models;
-using DelaWeb.Service;
 
 namespace DelaWeb.Controllers
 {
+    [Authorize]
     public class InvoicesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -55,7 +51,7 @@ namespace DelaWeb.Controllers
             {
                 db.Invoices.Add(invoice);
                 db.SaveChanges();
-                return RedirectToAction("Details","Customers",new { id = invoice.CustomerID });
+                return RedirectToAction("Details", "Customers", new { id = invoice.CustomerID });
             }
 
             return View(invoice);

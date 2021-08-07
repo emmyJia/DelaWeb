@@ -3,8 +3,6 @@ using DelaWeb.Service;
 using DelaWeb.ViewModels;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace DelaWeb.Controllers
@@ -20,22 +18,22 @@ namespace DelaWeb.Controllers
             model.CustomersList = Customers.GetAllCustomers();
             return View(model);
         }
-        //public async Task<ActionResult> CreateAll()
+        //public ActionResult CreateAll()
         //{
-        //    using(var db = new ApplicationDbContext())
+        //    using (var db = new ApplicationDbContext())
         //    {
 
         //        var model = new CustomersViewModel();
         //        model.CustomersList = Customers.GetAllCustomers();
         //        AccountController ac = new AccountController();
         //        var Response = false;
-        //        foreach (var item in model.CustomersList)
+        //        foreach (var item in model.CustomersList.Where(c => c.ID > 82))
         //        {
-        //             Response = ac.RegisterOne(new RegisterViewModel { CustomerID = item.ID, Email = item.ID + "@dela.com", Password = "Dela1234." }).GetAwaiter().GetResult();
+        //            Response = ac.RegisterOne(item.ID).GetAwaiter().GetResult();
         //        }
         //    }
 
-        //    return View("Index","Home");
+        //    return View("Index", "Home");
         //}
         // GET: Customers/Details/5
         [Route("details/{id}")]
@@ -99,7 +97,7 @@ namespace DelaWeb.Controllers
         }
 
         // POST: Customers/Edit/5
-            //public ActionResult Edit([Bind(Include = "ItemID,ItemCode,Name,Description,Price,DiscountPrice,Bonus,Type,Other1,Other2,Other3,Other4,Other5")] Product product)
+        //public ActionResult Edit([Bind(Include = "ItemID,ItemCode,Name,Description,Price,DiscountPrice,Bonus,Type,Other1,Other2,Other3,Other4,Other5")] Product product)
         [HttpPost]
         public ActionResult Edit([Bind(Include = "ID,Name,Address1,Phone,SponsorID")] Customer customer)
         {

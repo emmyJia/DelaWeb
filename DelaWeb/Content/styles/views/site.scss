@@ -1,0 +1,165 @@
+﻿@import "../componentes/colors.scss";
+
+body {
+    background-color: $whitebackground;
+    font-family: "Roboto", sans-serif;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    background-color: $gray;
+    width: 100%;
+    color: $white;
+}
+
+.footer-space {
+    height: 54px;
+    display: block;
+}
+
+select {
+    max-width: none;
+}
+
+.body-content{
+    height: calc(100% - 140px);
+    width:97%;
+    background-image: url('../Imagenes/Fondo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+//    background-attachment: fixed;
+    position:absolute;
+    top: 110px;
+    left: 50px;
+    right: 0;
+    bottom: 0;
+}
+
+/**************************/
+
+.navbar-full {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+
+    .container {
+        height: 100px;
+    }
+}
+
+.img-container {
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+
+    img {
+        width: 100%;
+        height: 250px;
+    }
+}
+
+.image-logo {
+    z-index: 0;
+}
+
+#navbarSupportedContent {
+    height: 100px;
+    z-index: 0;
+}
+
+.navbar-space {
+    height: 100px;
+    display: block;
+}
+
+.nav-link {
+    color: white;
+    font-size: 22px
+}
+
+@mixin space ($height) {
+    display: block;
+    margin-bottom: $height;
+}
+
+.space-20 {
+    @include space(20px);
+}
+.space-50 {
+    @include space(50px);
+}
+.space-100 {
+    @include space(100px);
+}
+
+.deli-container {
+    position: fixed;
+    bottom: 125px;
+    left: 310px;
+
+    div {
+        height: 500px;
+        width: 200px;
+    }
+}
+
+.deli-dialog {
+    position: fixed;
+    bottom: 480px;
+    left: 490px;
+
+    .dialog-text {
+        position: absolute;
+        height: 145px;
+        width: 300px;
+        top: 45px;
+        left: 150px;
+        text-align: center;
+        color: $whitebackground;
+        font-weight: 700;
+    }
+}
+
+#navbarSupportedContent{
+    .nav-item{
+        margin-top: auto;
+    }
+}
+
+/*HOME*/
+.transparent-div {
+    display: block;
+    border: 1px gray solid;
+    border-radius: 28px;
+    padding: 25px;
+    box-shadow: 5px 2px 15px -2px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.social-networks {
+    position: fixed;
+    bottom: 60px;
+    display: inline-flex;
+
+    .item {
+        float: left;
+        margin-left:30px;
+        margin-bottom: 5px;
+    
+        img {
+            height: 60px;
+        }
+    }
+}
+
+.totals{
+    font-size: 20px;
+    font-weight: 800;
+}

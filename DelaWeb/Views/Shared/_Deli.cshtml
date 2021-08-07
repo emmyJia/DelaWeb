@@ -1,0 +1,36 @@
+﻿@{ 
+    var isLogin = Request.Url.AbsolutePath.Contains("Login") || Request.Url.AbsolutePath == "/";
+}
+
+<div class="deli-container">
+    <div class="deli-image">
+        <img src="~/Content/Imagenes/Deli.png" class="h-100" />
+    </div>
+</div>
+<div class="deli-dialog">
+    <img src="~/Content/Imagenes/Globo.png" />
+    <div class="dialog-text">
+        @if (isLogin)
+        {
+            <h3>Bienvenido</h3>
+            <p class="">
+                Introduce tus datos para iniciar sesion
+                <br />
+                o
+                <br />
+                Haz click en registrarse para comenzar tu negocio
+            </p>
+        }
+        else
+        {
+            <h3>Bienvenido</h3>
+            <b>@User.Identity.Name</b>
+            <br />
+            <p class="">
+                Este es tu sitio de negocio.
+            </p>
+
+        }
+
+    </div>
+</div>

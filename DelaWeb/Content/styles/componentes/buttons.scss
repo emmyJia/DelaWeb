@@ -1,0 +1,35 @@
+﻿@import "../componentes/colors.scss";
+
+a {
+    color: $darkgreen;
+}
+
+.btn {
+
+    &.btn-success {
+        color: $darkgreen;
+    }
+
+    &.btn-orange {
+        background-color: $orange;
+        color: $white;
+    }
+
+    &.btn-radius {
+        border-radius: 15px;
+        min-width: 90px;
+    }
+
+    &.btn-green {
+        background-color: #499A7E;
+    }
+
+    &.btn-quantity {
+        border: 2px solid $darkgreen;
+        margin-left: 10px;
+        color: $darkgreen;
+        font-weight: bolder;
+        font-size: 20px;
+    }
+}
+

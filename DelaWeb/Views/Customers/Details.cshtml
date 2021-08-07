@@ -8,72 +8,150 @@
         </p>
         <hr />
         <div class="row">
+
             <div class="col-sm-8">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.ID)
-                    </dt>
+                <div class="row">
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer.ID)
-                    </dd>
+                    <div class="col-sm-6">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.ID)
+                            </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.Name)
-                    </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.ID)
+                            </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer.Name)
-                    </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.Name)
+                            </dt>
 
-                    <dt>
-                        Dirección
-                    </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.Name)
+                            </dd>
+                            <dt>
+                                Dirección
+                            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer.Address1)
-                    </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.Address1)
+                            </dd>
+                        </dl>
+                    </div>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.Phone)
-                    </dt>
+                    <div class="col-sm-6">
+                        <dl class="dl-horizontal">
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer.Phone)
-                    </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.Phone)
+                            </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.SponsorID)
-                    </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.Phone)
+                            </dd>
 
-                    <dd>
-                        @if (User.Identity.IsMaster())
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.SponsorID)
+                            </dt>
+
+                            <dd>
+                                @if (User.Identity.IsMaster())
+                                {
+                                    @Html.ActionLink(Model.Customer.SponsorID + " - " + Model.Sponsor.Name, "Details", "Customers", new { id = Model.Customer.SponsorID }, new { @class = "btn btn-link" })
+                                }
+                                else
+                                {
+                                    @(Model.Customer.SponsorID + " - " + Model.Customer.Name)
+                                }
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.CustomerType)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Customer.CustomerType)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Customer.StartTime)
+                            </dt>
+
+                            <dd>
+                                @(Model.Customer.StartTime.ToLongDateString())
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <hr />
+                <div>
+                    <h3>Ordenes</h3>
+                    <p>
+                        @Html.ActionLink("Create New", "Create", "Orders", new { customerID = Model.Customer.ID }, new {  } )
+                    </p>
+                    <table class="table table-hover deli-table">
+                        <tr class="">
+                            <th>
+                                Orden ID
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Cantidad
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+
+                        @foreach (var item in Model.Orders.OrderByDescending(c=>c.Date))
                         {
-                            @Html.ActionLink(Model.Customer.SponsorID + " - " + Model.Sponsor.Name, "Details", "Customers", new { id = Model.Customer.SponsorID }, new { @class = "btn btn-link" })
+                            <tr class="table-secondary">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @item.Details.Sum(c => c.Quantity) items
+                                </td>
+                                <td>
+                                    @item.Details.Sum(c => c.Price * c.Quantity)
+                                </td>
+
+                                <td>
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |*@
+                                    <a href="@Url.Action("Details", "Orders", new { id = item.OrderID })" ><i class="di-details"></i></a>
+                                    @*@Html.ActionLink("", "Details", "Orders", new { id = item.OrderID }, new { @class="di-details" })*@
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.OrderID })*@
+                                </td>
+                            </tr>
                         }
-                        else
-                        {
-                            @(Model.Customer.SponsorID + " - " + Model.Customer.Name)
-                        }
-                    </dd>
+                        @*@foreach (var item in Model.Invoices)
+                            {
+                                <tr class="table-dark">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Percentage)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", "Invoices", new { id = item.InvoiceID }, null) |
+                                        @Html.ActionLink("Details", "Details", "Invoices", new { id = item.InvoiceID }, null) |
+                                    </td>
+                                </tr>
+                            }*@
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.CustomerType)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer.CustomerType)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Customer.StartTime)
-                    </dt>
-
-                    <dd>
-                        @(Model.Customer.StartTime.ToLongDateString())
-                    </dd>
-
-                </dl>
+                    </table>
+                </div>
             </div>
             <div class="col-sm-4">
                 <table class="table">
@@ -98,74 +176,6 @@
                 </table>
             </div>
         </div>
-        
-    </div>
-    <br />
-    <hr />
-    <div>
-        <h3>Ordenes</h3>
-        <p>
-            @Html.ActionLink("Create New", "Create", "Orders", new { customerID = Model.Customer.ID },null)
-        </p>
-        <table class="table table-hover">
-            <tr class="">
-                <th>
-                    Orden ID
-                </th>
-                <th>
-                    Fecha
-                </th>
-                <th>
-                    Cantidad
-                </th>
-                <th>
-                    Total
-                </th>
-                <th></th>
-            </tr>
 
-            @foreach (var item in Model.Orders)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @item.Details.Sum(c => c.Quantity) items
-                    </td>
-                    <td>
-                        @item.Details.Sum(c => c.Price * c.Quantity)
-                    </td>
-                   
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |*@
-                        @Html.ActionLink("Details", "Details", "Orders", new { id = item.OrderID }, null) 
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.OrderID })*@
-                    </td>
-                </tr>
-            }
-            @*@foreach (var item in Model.Invoices)
-        {
-            <tr class="table-dark">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Percentage)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Invoices", new { id = item.InvoiceID }, null) |
-                    @Html.ActionLink("Details", "Details", "Invoices", new { id = item.InvoiceID }, null) |
-                </td>
-            </tr>
-        }*@
-
-        </table>
     </div>
 </div>
