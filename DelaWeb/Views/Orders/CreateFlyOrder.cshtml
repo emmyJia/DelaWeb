@@ -22,19 +22,20 @@
 
         <div class="mt-5">
             <div class="row">
-                @if (User.Identity.IsMaster())
-                {
-                    <text>
-                        <input type="text" name="CustomerID" value="@customerID" />
-                    </text>
-                }
-                else
-                {
-                    <input type="hidden" name="CustomerID" value="@customerID" />
-                }
-                @Html.HiddenFor(c => c.Type, new { Value = 1 })
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" })) { 
+                    @Html.AntiForgeryToken()
 
-                <div class="col-sm-6 form-group">
+                    <div class="form-group">
+                        <div class="col-12"><label>CustomerKey: </label></div>
+                        <div class="col-12"><input class="form-control" name="CustomerKey" value="1dela723" /></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-12"><label>Password: </label></div>
+                        <div class="col-12"><input type="password" class="form-control" name="CustomerPassword" value="999n9meX" /></div>
+                    </div>
+                }
+
+                <div class="col-sm-6 form-group" style="border-left: 1px green solid">
                     @Html.Label("Agregar Productos", htmlAttributes: new { @class = "control-label " })
                     <div class="row">
                         <div class="col-md-8 d-inline-block">
@@ -99,8 +100,8 @@
 
         var cont = 1;
         var items = [];
-        let customerDetailsUrl = '@Url.Action("Details", "Customers", new { id = customerID })';
-        let createOrderUrl = '@Url.Action("CreateOrder","Orders")';
+        //let customerDetailsUrl = '@Url.Action("CreateFlyOrder", "Orders")';
+        let createOrderUrl = '@Url.Action("CreateFlyOrder","Orders")';
         let getProductUrl = '@Url.Action("GetProductInfo","Products")';
         var $itemlist = $('#item-list tbody');
         var total = 0;
@@ -181,22 +182,38 @@
                 swal.fire("El costo mínimo por órden es de $ 990.00, pagando $ 495.00 USD");
                 return;
             }
-            var data = {};
-            let customer = $('[name="CustomerID"').val();
-            let type = $('[name="Type"').val();
+            var form = $("#__AjaxAntiForgeryForm");
+            var token = $('[name="__RequestVerificationToken"]', form).val();
 
-            data.items = JSON.stringify(items);
-            data.customerid = customer;
-            data.type = type;
+            var data = {};
+            let customerKey = $('[name="CustomerKey"').val();
+            let customerPassword = $('[name="CustomerPassword"').val();
+
+            if (customerKey == "" || customerPassword == "") {
+                swal.fire("Debes incluir la llave y la contraseña \n\r You must include the key and password");
+                return;
+            }
+
+            //data.items = JSON.stringify(items);
+            //data.customerKey = customerKey;
+            //data.password = customerPassword;
 
             ajax.json({
                 url: createOrderUrl,
-                data: data, //JSON.stringify(data),
+                headers: {
+                    __RequestVerificationToken: token,
+                },
+                data: {
+                    items : JSON.stringify(items),
+                    customerKey : customerKey,
+                    password : customerPassword
+                },
+                 //JSON.stringify(data),
                 success: function (d) {
                     if (d.success == true) {
                         swal.fire('Hecho!!');
                         setTimeout(function () {
-                            window.location = customerDetailsUrl;
+                            window.location = window.location;
                         }, 1000);
                     }
                     else {

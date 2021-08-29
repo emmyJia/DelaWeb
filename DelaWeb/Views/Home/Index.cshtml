@@ -7,25 +7,63 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    //var isMaster = User.Identity.IsMaster();
+    var isMaster = User.Identity.IsMaster();
 
-    <div class="row mt-5">
-        <div class="offset-8 col-sm-4">
-            <div class="transparent-div">
-                <h4 class="text-center">ACCESO RAPIDO</h4>
-                @*@if (isMaster)
-                {
-                    <div class="col-sm-12 pb-2"><a id="consultar-Orden"><i class="fa fa-details"></i>Consultar Orden por ID</a></div>
+<div class="row mt-5 actions-container">
+    <!--<div class="offset-8 col-sm-4">
+        <div class="transparent-div">
+            <h4 class="text-center">ACCESO RAPIDO</h4>-->
+    @*@if (isMaster)
+        {
+            <div class="col-sm-12 pb-2"><a id="consultar-Orden"><i class="fa fa-details"></i>Consultar Orden por ID</a></div>
 
-                }
-                else
-                {
-                    <div class="col-sm-12 pb-2"><a href="@Url.Action("Create","Orders")">Crear una Orden</a></div>
-                    <div class="col-sm-12 pb-2"><a href="@Url.Action("ChangePassword","Manage")">Cambiar Contraseña</a></div>
-                }*@
+        }
+        else
+        {
+            <div class="col-sm-12 pb-2"><a href="@Url.Action("Create","Orders")">Crear una Orden</a></div>
+            <div class="col-sm-12 pb-2"><a href="@Url.Action("ChangePassword","Manage")">Cambiar Contraseña</a></div>
+        }*@
+    <!--</div>
+    </div>-->
+    @if (User.Identity.IsAuthenticated) { 
+        if (isMaster)
+        {
+            <div class="col-12 col-lg-4">
+                <a href="@Url.Action("Index","Customers")">
+                    <img src="~/Content/Imagenes/Distribuidores.png" />
+                    <span>Distribuidores</span>
+                </a>
             </div>
-        </div>
-    </div>
+            <div class="col-12 col-lg-4">
+                <a href="@Url.Action("Index","Orders")">
+                    <img src="~/Content/Imagenes/Envios.png" />
+                    <span>Ordenes</span>
+                </a>
+            </div>
+            <div class="col-12 col-lg-4">
+                <a href="@Url.Action("Index","Products")">
+                    <img src="~/Content/Imagenes/Envios.png" />
+                    <span>Products</span>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 col-lg-4">
+                <a href="@Url.Action("Create","Orders")">
+                    <img src="~/Content/Imagenes/Envios.png" />
+                    <span>Crear Nueva Orden</span>
+                </a>
+            </div>
+            <div class="col-12 col-lg-4">
+                <a href="@Url.Action("Details", "Customers",new {id = User.Identity.GetCustomerID() })">
+                    <img src="~/Content/Imagenes/userT.png" />
+                    <span>My Account</span>
+                </a>
+            </div>
+        }
+    }
+</div>
 
 }
 <div class="modal" id="order-modal" tabindex="-1" role="dialog">
@@ -49,7 +87,7 @@
 </div>
 
 
-@Html.Partial("_Deli")
+@*@Html.Partial("_Deli")*@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@

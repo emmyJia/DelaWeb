@@ -1,4 +1,5 @@
-﻿using DelaWeb.Models;
+﻿using DelaWeb.Attributes;
+using DelaWeb.Models;
 using DelaWeb.Service;
 using DelaWeb.ViewModels;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace DelaWeb.Controllers
     public class CustomersController : Controller
     {
         // GET: Customers
+        [OnlyMaster]
         public ActionResult Index()
         {
             var model = new CustomersViewModel();

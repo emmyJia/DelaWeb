@@ -49,7 +49,8 @@
                     @if (isMaster) //Validating if it's master account
                     {
                         @*@Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class="di-details" })  |
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })*@
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID })*@
+                        <a href="@Url.Action("Edit","Customers",new { id = item.ID })"><i class="di-edit"></i></a>
                         <a href="@Url.Action("Details","Customers",new { id = item.ID })"><i class="di-details"></i></a>
                         <a href="@Url.Action("Delete", "Customers",new { id = item.ID })"><i class="di-delete"></i></a>
                         @*@Html.ActionLink("RegisterOne", "RegisterOne", "Account", new { id = item.ID },null)*@

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using App.Extensions
 @if (User.Identity.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right d-flex float-right ml-auto mr-0" }))
@@ -9,6 +10,7 @@
             @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
         </li>
         <li class="nav-item mt-auto"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+        @*<li class="nav-item mt-auto"><a class="nav-link" href="@Url.Action("SignOut","Account")">Cerrar sesión</a></li>*@
     }
 }
 else

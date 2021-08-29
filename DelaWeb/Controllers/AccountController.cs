@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace DelaWeb.Controllers
 {
@@ -427,9 +428,27 @@ namespace DelaWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            //HttpContext.GetOwinContext()
+            //    .Authentication
+            //    .SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            if (Session != null)
+                Session.Abandon();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            FormsAuthentication.SignOut();
+            //Session.RemoveAll();
             return RedirectToAction("Login", "Account");
+            //return Response.Redirect(FormsAuthentication.LoginUrl);
+
         }
+
+        //[ValidateAntiForgeryToken]
+        //public ActionResult SignOut()
+        //{
+        //    HttpContext.GetOwinContext()
+        //        .Authentication
+        //        .SignOut(CookieAuthenticationDefaults.AuthenticationType);
+        //    return RedirectToAction("Login", "Account");
+        //}
 
         //
         // GET: /Account/ExternalLoginFailure

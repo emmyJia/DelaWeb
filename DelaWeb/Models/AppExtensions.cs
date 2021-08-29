@@ -1,10 +1,7 @@
 ﻿using DelaWeb.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Web;
 
 namespace App.Extensions
 {
@@ -22,7 +19,7 @@ namespace App.Extensions
         }
         public static bool IsMaster(this IIdentity identity)
         {
-            return Int32.Parse(identity.GetCustomerType()) == (int)DelaWeb.Models.CustomerType.Master;
+            return Int32.Parse(identity.GetCustomerType()) == (int)CustomerType.Master;
 
         }
     }

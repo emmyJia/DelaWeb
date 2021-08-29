@@ -1,5 +1,4 @@
-﻿using App.Extensions;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace DelaWeb.Controllers
 {
@@ -7,7 +6,7 @@ namespace DelaWeb.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.isMaster = User.Identity.IsAuthenticated && User.Identity.IsMaster();
+
             return View();
         }
         public ActionResult Start()

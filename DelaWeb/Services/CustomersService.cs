@@ -1,9 +1,8 @@
-﻿using System;
+﻿using DelaWeb.Models;
+using DelaWeb.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using DelaWeb.Models;
-using DelaWeb.ViewModels;
 
 namespace DelaWeb.Service
 {
@@ -15,9 +14,9 @@ namespace DelaWeb.Service
             using (var context = new ApplicationDbContext())
             {
                 list = (from c in context.Customers
-                            select c).ToList();
+                        select c).ToList();
             }
-            
+
             return list;
         }
         public static Customer GetCustomerByID(int customerID)
@@ -26,8 +25,8 @@ namespace DelaWeb.Service
             using (var context = new ApplicationDbContext())
             {
                 customer = (from c in context.Customers
-                        where c.ID == customerID
-                        select c).FirstOrDefault();
+                            where c.ID == customerID
+                            select c).FirstOrDefault();
             }
 
             return customer;
@@ -57,15 +56,25 @@ namespace DelaWeb.Service
                 var existingCustomer = new Customer();
                 using (var context = new ApplicationDbContext())
                 {
+                    //IQueryable<Customer> customers = (from c in context.Customers
+                    //                                  select c);
+                    //foreach (var c in customers)
+                    //{
+                    //    var pass = System.Web.Security.Membership.GeneratePassword(8, 1);
+                    //    pass = Regex.Replace(pass, @"[^a-zA-Z0-9]", m => "9");
+                    //    c.Other2 = pass;
+                    //}
+                    //context.SaveChanges();
+
                     existingCustomer = (from c in context.Customers
-                                where c.ID == customer.ID
-                                select c).FirstOrDefault();
+                                        where c.ID == customer.ID
+                                        select c).FirstOrDefault();
 
                     existingCustomer.Address1 = customer.Address1;
                     existingCustomer.Name = customer.Name;
                     existingCustomer.Phone = customer.Phone;
                     existingCustomer.SponsorID = customer.SponsorID;
-
+                    //existingCustomer.Other2 = System.Web.Security.Membership.GeneratePassword(10, 3);
                     context.SaveChanges();
                     return true;
                 }
@@ -106,7 +115,7 @@ namespace DelaWeb.Service
             using (var context = new ApplicationDbContext())
             {
                 list = (from c in context.Customers
-                        where c.SponsorID==sponsorID && c.ID != sponsorID
+                        where c.SponsorID == sponsorID && c.ID != sponsorID
                         select c).ToList();
             }
 

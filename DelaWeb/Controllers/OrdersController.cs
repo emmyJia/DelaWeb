@@ -1,4 +1,5 @@
 ﻿using App.Extensions;
+using DelaWeb.Attributes;
 using DelaWeb.Models;
 using DelaWeb.Service;
 using DelaWeb.ViewModels;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace DelaWeb.Controllers
@@ -214,6 +216,90 @@ namespace DelaWeb.Controllers
         {
 
             return View();
+        }
+
+
+        // GET: Orders/Create
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult CreateFlyOrder()
+        {
+            return View();
+        }
+        public void ValidateRequestHeader()
+        {
+            string cookieToken = "";
+            string formToken = "";
+
+            string tokenHeader = HttpContext.Request.Headers.Get("RequestVerificationToken");
+
+            string[] tokens = tokenHeader.Split(':');
+
+            if (tokens.Length == 2)
+            {
+                cookieToken = tokens[0].Trim();
+                formToken = tokens[1].Trim();
+            }
+
+            AntiForgery.Validate(cookieToken, formToken);
+        }
+
+        [HttpPost]
+        [CustomValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public ActionResult CreateFlyOrder(string customerKey, string password, string items)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(customerKey) || string.IsNullOrEmpty(password))
+                {
+                    return RedirectToAction("Create");
+                }
+
+                var itemsObject = JArray.Parse(items);
+                var listitems = itemsObject.ToObject<List<ItemCart>>();
+                var order = new Order();
+                var existingCustomer = new Customer();
+
+                using (var context = new ApplicationDbContext())
+                {
+
+                    existingCustomer = (from c in context.Customers
+                                        where c.Other1 == customerKey && c.Other2 == password
+                                        select c).FirstOrDefault();
+                }
+
+                order.CustomerID = existingCustomer.ID;
+                order.Date = DateTime.Now;
+                order.Type = 1;
+                var details = new List<OrderDetails>();
+
+                //order.Details = details;
+                order = db.Orders.Add(order);
+                db.SaveChanges();
+
+                foreach (var item in listitems.Where(i => i.Quantity > 0))
+                {
+                    var itemid = Int32.Parse(item.Code);
+                    var itemDB = db.Products.FirstOrDefault(i => i.ItemID == itemid);
+                    details.Add(new OrderDetails { ProductID = Int32.Parse(item.Code), OrderID = order.OrderID, Quantity = item.Quantity, Price = itemDB.Price });
+                }
+
+                db.OrderDetails.AddRange(details);
+                db.SaveChanges();
+
+                return new JsonNetResult(new
+                {
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return new JsonNetResult(new
+                {
+                    success = false
+                });
+            }
         }
     }
 }

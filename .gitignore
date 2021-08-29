@@ -1,0 +1,11 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/DelaWeb/Properties/PublishProfiles
+/DelaWeb/obj
+/DelaWeb/obj/Debug
+/DelaWeb/App_Data
+/DelaWeb/bin
+/.vs
+/.vs/DelaWeb/v16

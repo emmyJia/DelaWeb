@@ -167,6 +167,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attributes\OnlyMaster.cs" />
+    <Compile Include="Attributes\CustomValidateAntiForgeryToken.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Extensions\Strings.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,48 +231,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\Imagenes\Products\Aceite CBD_1000.png" />
-    <Content Include="Content\Imagenes\Products\Aceite CBD_2500.png" />
-    <Content Include="Content\Imagenes\Products\Aceite_Arbol.png" />
-    <Content Include="Content\Imagenes\Products\AjoNegro-Perejil_capsulas.png" />
-    <Content Include="Content\Imagenes\Products\Amenia plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Arnica_capsulas.png" />
-    <Content Include="Content\Imagenes\Products\CBD+Arnica_Cream.png" />
-    <Content Include="Content\Imagenes\Products\Chromium_picolinate_capsulas.png" />
-    <Content Include="Content\Imagenes\Products\Colageno_guanabana_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Colageno_pina_polvo.png" />
-    <Content Include="Content\Imagenes\Products\curcumin plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Detox plus_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Diabetes plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Diabetes plus_te.png" />
-    <Content Include="Content\Imagenes\Products\Echinacea_capsulas.png" />
-    <Content Include="Content\Imagenes\Products\Fish oil_caps.png" />
-    <Content Include="Content\Imagenes\Products\Ganoderm Coffee_te_papel.png" />
-    <Content Include="Content\Imagenes\Products\Gastritis plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Glucosamine_caps.png" />
-    <Content Include="Content\Imagenes\Products\Healthy-Bone_caps.png" />
-    <Content Include="Content\Imagenes\Products\ImmPro_tea_papel.png" />
-    <Content Include="Content\Imagenes\Products\ImmuneProNatural_caps.png" />
-    <Content Include="Content\Imagenes\Products\Inflammation_te_papel.png" />
-    <Content Include="Content\Imagenes\Products\Kdney-Plus_te_papel.png" />
-    <Content Include="Content\Imagenes\Products\Licuado-Chocolate_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Licuado-Fresa_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Liver plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Man essential power_caps.png" />
-    <Content Include="Content\Imagenes\Products\Matcha plus Vitamin B-Complex_caps.png" />
-    <Content Include="Content\Imagenes\Products\Matcha_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Melatonine_te_papel.png" />
-    <Content Include="Content\Imagenes\Products\Menopausia plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Moringa-Guanabana-Curcuma-Tejocote_polvo.png" />
-    <Content Include="Content\Imagenes\Products\Moringa-Tejocote_Te.png" />
-    <Content Include="Content\Imagenes\Products\Probioticos_caps.png" />
-    <Content Include="Content\Imagenes\Products\Prostate plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Stress plus_caps.png" />
-    <Content Include="Content\Imagenes\Products\Stress plus_te.png" />
-    <Content Include="Content\Imagenes\Products\Te verde &amp; Ganoderma_te_papel.png" />
-    <Content Include="Content\Imagenes\Products\Vitamina C_polvo.png" />
+    <Content Include="Content\Imagenes\FondoMobile.png" />
+    <Content Include="Content\Imagenes\userT.png" />
     <Content Include="Content\scripts\main.js" />
     <Content Include="Content\scripts\modules\ajax.js" />
+    <Content Include="Content\scripts\vendor\bootstrap.js" />
     <Content Include="Content\scripts\vendor\bootstrap.min.js" />
     <Content Include="Content\scripts\vendor\fontAwesome\all.min.css" />
     <Content Include="Content\scripts\vendor\fontAwesome\solid.min.css" />
@@ -290,6 +256,11 @@
     <Content Include="Content\Imagenes\Nuevo Pedido.png" />
     <Content Include="Content\Imagenes\Plus.png" />
     <Content Include="Content\Imagenes\Ventas.png" />
+    <None Include="Content\scripts\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Content\scripts\vendor\jquery-3.4.1.js" />
+    <Content Include="Content\scripts\vendor\jquery.validate.js" />
+    <Content Include="Content\scripts\vendor\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\scripts\vendor\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\styles\site.css">
       <DependentUpon>site.scss</DependentUpon>
     </Content>
@@ -315,11 +286,6 @@
     <Content Include="Content\styles\componentes\colors.scss" />
     <Content Include="Content\styles\views\site.scss" />
     <Content Include="Content\styles\componentes\forms.scss" />
-    <Content Include="Content\styles\fonts\fonts.scss" />
-    <Content Include="Content\styles\fonts\roboto\RobotoSlab-Bold.ttf" />
-    <Content Include="Content\styles\fonts\roboto\RobotoSlab-Light.ttf" />
-    <Content Include="Content\styles\fonts\roboto\RobotoSlab-Regular.ttf" />
-    <Content Include="Content\styles\fonts\roboto\RobotoSlab-Thin.ttf" />
     <Content Include="Content\styles\componentes\tables.scss" />
     <Content Include="Content\styles\componentes\icons.scss" />
     <Content Include="fonts\FontAwesome.otf" />
@@ -395,10 +361,10 @@
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Customers\CustomersGraphic.cshtml" />
     <Content Include="Views\Shared\_Deli.cshtml" />
+    <Content Include="Views\Orders\CreateFlyOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\styles\bootstrap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -433,6 +399,15 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

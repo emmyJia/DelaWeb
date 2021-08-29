@@ -2,10 +2,13 @@
 <div id="customerdetails-view">
     <div>
         <h4>Distribuidor</h4>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Customer.ID }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
+        @if(User.Identity.IsAuthenticated && User.Identity.IsMaster())
+        {
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Customer.ID }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        }
         <hr />
         <div class="row">
 

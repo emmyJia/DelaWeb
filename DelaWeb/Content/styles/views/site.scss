@@ -22,10 +22,18 @@ select {
     max-width: none;
 }
 
+.navbar {
+    float: right;
+    margin-right: 111px;
+
+    .navbar-toggler {
+        font-size: 30px;
+    }
+}
 .body-content{
     height: calc(100% - 140px);
     width:97%;
-    background-image: url('../Imagenes/Fondo.png');
+    //background-image: url('../Imagenes/Fondo.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -64,6 +72,8 @@ select {
 
 .image-logo {
     z-index: 0;
+    padding-left: 15px;
+    height: 95px;
 }
 
 #navbarSupportedContent {
@@ -98,8 +108,12 @@ select {
 
 .deli-container {
     position: fixed;
-    bottom: 125px;
-    left: 310px;
+    top: 50vh;
+    left: 15vw;
+
+    @media (max-width: 512px){
+        left:0vw;
+    }
 
     div {
         height: 500px;
@@ -109,18 +123,30 @@ select {
 
 .deli-dialog {
     position: fixed;
-    bottom: 480px;
-    left: 490px;
+    top: 47vh;
+    left: 30vw;
+    max-width: 350px;
+    overflow: hidden;
+    height: 20vh;
+
+    @media (max-width: 512px) {
+        left: 42vw;
+    }
+
+    img {
+        max-width: 350px;
+    }
+
 
     .dialog-text {
         position: absolute;
-        height: 145px;
-        width: 300px;
-        top: 45px;
-        left: 150px;
+        height: auto;
+        width: auto;
+        top: 30px;
+        left: 100px;
         text-align: center;
-        color: $whitebackground;
         font-weight: 700;
+        color: $whitebackground;
     }
 }
 
@@ -162,4 +188,10 @@ a {
 .totals{
     font-size: 20px;
     font-weight: 800;
+}
+
+.actions-container {
+    img{
+        width: 140px;
+    }
 }

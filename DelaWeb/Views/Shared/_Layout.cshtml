@@ -1,4 +1,8 @@
 ﻿@using App.Extensions
+@{ 
+    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    Response.Cache.SetExpires(DateTime.Now.ToUniversalTime());
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,16 +26,14 @@
             @if (Request.IsLocal)
             { <text>urlArgs: "bust=" + (new Date()).getTime(),</text> }
             paths: {
-                'ajax': 'modules/ajax',
-                'swal': "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min",
-                //'bootstrap': 'vendor/bootstrap.min',
                 'jquery': 'vendor/jquery-3.4.1.min',
                 'jquery-validate': 'vendor/jquery.validate.min',
+                'ajax': 'modules/ajax',
+                'swal': "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min",
+                'bootstrap': 'vendor/bootstrap',
                // 'cookies': 'modules/cookies',
                // 'mask': 'vendor/jquery.mask.min'
                // 'jquery-ui': 'https://code.jquery.com/ui/1.11.4/jquery-ui.min',
-               // 'kendo': 'vendor/kendo/scripts/kendo.web.min',
-               // 'kendo-cultures': 'vendor/kendo/scripts/kendo.culture.min',
                 'toastr': 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min',
                // 'handlebars4': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min',
             },
@@ -52,6 +54,17 @@
 
 </head>
 <body>
+    @*<style>
+            .body-content {
+                background-image:url('@Url.Content("~/Content/Imagenes/Fondo.png")');
+            }
+            @@media (max-width: 700px){
+                .body-content {
+                    background-image:url('@Url.Content("~/Content/Imagenes/FondoMobile.png")');
+                }
+            }
+        </style>*@
+    
     <div class="navbar-full">
         <div class="img-container">
             <img src="~/Content/Imagenes/Navbar.png" />
@@ -75,33 +88,38 @@
                                 <img src="~/Content/Imagenes/home bco.png" style="height: 60px; " />
                             </a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            var isMaster = User.Identity.IsAuthenticated && User.Identity.IsMaster();
-
-                            if (isMaster)
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("CreateFlyOrder", "Orders")">
+                                     <span>Create a Quick Order</span>
+                                </a>
+                            </li>*@
+                        @*@if (User.Identity.IsAuthenticated)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Customers") ?"active" :"")" href="@Url.Action("Index", "Customers")">Distribuidores</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Invoices") ?"active" :"")" href="@Url.Action("Index", "Invoices")">Ventas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Ordenes") ?"active" :"")" href="@Url.Action("Index", "Orders")">Ordenes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Products") ?"active" :"")" href="@Url.Action("Index", "Products")">Productos</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Customers") ?"active" :"")" href="@Url.Action("Details", "Customers",new {id = User.Identity.GetCustomerID() })">Mi Cuenta</a>
-                                </li>
-                            }
+                                var isMaster = User.Identity.IsAuthenticated && User.Identity.IsMaster();
 
-                        }
+                                if (isMaster)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Customers") ?"active" :"")" href="@Url.Action("Index", "Customers")">Distribuidores</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Invoices") ?"active" :"")" href="@Url.Action("Index", "Invoices")">Ventas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Ordenes") ?"active" :"")" href="@Url.Action("Index", "Orders")">Ordenes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Products") ?"active" :"")" href="@Url.Action("Index", "Products")">Productos</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link @(Request.Url.AbsoluteUri.Contains("Customers") ?"active" :"")" href="@Url.Action("Details", "Customers",new {id = User.Identity.GetCustomerID() })">Mi Cuenta</a>
+                                    </li>
+                                }
+
+                            }*@
 
                         @Html.Partial("_LoginPartial")
                     </ul>
@@ -137,7 +155,7 @@
     </footer>
 
     @*@Scripts.Render("~/bundles/jquery")*@
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>
